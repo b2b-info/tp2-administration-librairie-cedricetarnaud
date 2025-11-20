@@ -1,0 +1,105 @@
+namespace BookStore;
+
+public static class Database
+{
+    private static readonly List<Book> books = new();
+
+    private static uint nextId = 1;
+
+
+    public static int CountRecords()
+    {
+        return books.Count;
+    }
+
+    public static bool CheckPkExists(uint pk)
+    {
+        return books.Any(book => book.Id == pk);
+    }
+
+    public static List<Book> GetAllBooks()
+    {
+        return books.ToList();
+    }
+
+    public static Book? GetBookById(uint id)
+    {
+        return books.FirstOrDefault(book => book.Id == id);
+    }
+
+    public static async Task AddBook(Book book)
+    {
+        await Task.Delay(500);
+
+        books.Add(book);
+    }
+
+    public static bool UpdateBook(Book updated)
+    {
+        var index = books.FindIndex(book => book.Id == updated.Id);
+        if (index == -1) return false;
+
+        books[index] = updated;
+        return true;
+    }
+
+    public static bool RemoveBook(uint id)
+    {
+        var book = books.FirstOrDefault(book => book.Id == id);
+        if (book == null) return false;
+
+        books.Remove(book);
+        return true;
+    }
+
+    public static void SeedDemoData()
+    {
+        if (books.Count > 0) return;
+
+        books.Add(
+            new Book(
+                id: nextId++,
+                title: "The Pragmatic Programmer",
+                author: "Andrew Hunt, David Thomas",
+                price: 49.99,
+                quantity: 10
+            )
+        );
+        books.Add(
+            new Book(
+                id: nextId++,
+                title: "Clean Code",
+                author: "Robert C. Martin",
+                price: 39.99,
+                quantity: 5
+            )
+        );
+        books.Add(
+            new Book(
+                id: nextId++,
+                title: "Design Patterns: Elements of Reusable Object-Oriented Software",
+                author: "Erich Gamma",
+                price: 54.99,
+                quantity: 7
+            )
+        );
+        books.Add(
+            new Book(
+                id: nextId++,
+                title: "Refactoring: Improving the Design of Existing Code",
+                author: "Martin Fowler",
+                price: 47.50,
+                quantity: 4
+            )
+        );
+        books.Add(
+            new Book(
+                id: nextId++,
+                title: "Head First Design Patterns",
+                author: "Eric Freeman",
+                price: 44.99,
+                quantity: 12
+            )
+        );
+    }
+}
