@@ -10,6 +10,8 @@ public class Login
         new UserCredential("user", "1234")
     };
 
+    private static readonly object _lockLogin = new();
+
     public static void GetLoginInfo()
     {
         Console.Write("Username: ");
@@ -21,11 +23,14 @@ public class Login
 
     public static bool IsLoggedIn()
     {
-        return _users.Any(user =>
+        lock (_lockLogin)
+        {
+            return _users.Any(user =>
             string.Equals(
                 user.UserName, userName, StringComparison.OrdinalIgnoreCase)
                 && user.Password == passWord
             );
+        }
     }
 }
 
