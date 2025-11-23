@@ -13,6 +13,7 @@ class Program
         Console.WriteLine("Please Login");
 
         while (count <= 2)
+
         {
             Login.GetLoginInfo();
 
@@ -180,19 +181,19 @@ class Program
         string title = ReadNonEmpty("Title: ");
 
         var books = Database.GetAllBooks().FindAll(b =>
-                string.Equals(b.title, title, StringComparison.OrdinalIgnoreCase)
+                string.Equals(b.Title, title, StringComparison.OrdinalIgnoreCase)
             );
 
         if (books.Count == 0)
         {
-            Console.WriteLine("No book found with that title");
+            Console.WriteLine("No book found with that Title");
             return;
         }
 
         foreach (var book in books)
         {
             Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.title} deleted");
+            Console.WriteLine($"Book {book.Title} deleted");
         }
     }
 
@@ -246,7 +247,7 @@ class Program
         }
 
         Console.WriteLine($"Id: {book.Id}");
-        Console.WriteLine($"Title: {book.title}");
+        Console.WriteLine($"Title: {book.Title}");
         Console.WriteLine($"Author: {book.Author}");
         Console.WriteLine($"Price: {book.Price}");
         Console.WriteLine($"Quantity: {book.Quantity}");
@@ -269,7 +270,7 @@ class Program
 
         foreach (var b in books)
         {
-            Console.WriteLine($"[{b.Id}] {b.title} by {b.Author} - {b.Price} ({b.Quantity} in stock)");
+            Console.WriteLine($"[{b.Id}] {b.Title} by {b.Author} - {b.Price} ({b.Quantity} in stock)");
         }
     }
 
@@ -285,7 +286,7 @@ class Program
         }
 
         Console.WriteLine("Leave empty to keep the current value");
-        Console.WriteLine($"Current Title: {book.title}");
+        Console.WriteLine($"Current Title: {book.Title}");
         string newTitle = ReadOptional("New Title: ");
 
         Console.WriteLine($"Current Author: {book.Author}");
@@ -297,7 +298,7 @@ class Program
         Console.WriteLine($"Current Quantity: {book.Quantity}");
         string qtyInput = ReadOptional("New Quantity: ");
 
-        string finalTitle = string.IsNullOrWhiteSpace(newTitle) ? book.title : newTitle;
+        string finalTitle = string.IsNullOrWhiteSpace(newTitle) ? book.Title : newTitle;
         string finalAuthor = string.IsNullOrWhiteSpace(newAuthor) ? book.Author : newAuthor;
 
         double finalPrice = book.Price;
