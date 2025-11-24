@@ -1,5 +1,7 @@
 ﻿namespace BookStore;
 
+using Microsoft.Extensions.Logging;
+
 public class Login
 {
     private static string userName, passWord;
@@ -12,7 +14,7 @@ public class Login
 
     private static readonly object _lockLogin = new();
 
-    public static void GetLoginInfo()
+    public static void GetLoginInfo(ILogger logger)
     {
         Console.Write("Username: ");
         userName = Console.ReadLine();
@@ -21,7 +23,7 @@ public class Login
         passWord = Console.ReadLine();
     }
 
-    public static bool IsLoggedIn()
+    public static bool IsLoggedIn(ILogger logger)
     {
         lock (_lockLogin)
         {

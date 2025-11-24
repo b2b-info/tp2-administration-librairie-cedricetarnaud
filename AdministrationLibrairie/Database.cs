@@ -1,5 +1,7 @@
 namespace BookStore;
 
+using Microsoft.Extensions.Logging;
+
 public static class Database
 {
     private static readonly List<Book> books = new();
@@ -7,8 +9,7 @@ public static class Database
 
     private static uint nextId = 1;
 
-
-    public static int CountRecords()
+    public static int CountRecords(ILogger logger)
     {
         lock (_lockDatabase)
         {
@@ -16,34 +17,31 @@ public static class Database
         }
     }
 
-    public static bool CheckPkExists(uint pk)
+    public static bool CheckPkExists(uint pk, ILogger logger)
     {
         lock (_lockDatabase)
         {
             return books.Any(book => book.Id == pk);
         }
-
     }
 
-    public static List<Book> GetAllBooks()
+    public static List<Book> GetAllBooks(ILogger logger)
     {
         lock (_lockDatabase)
         {
             return books.ToList();
         }
-
     }
 
-    public static Book? GetBookById(uint id)
+    public static Book? GetBookById(uint id, ILogger logger)
     {
         lock (_lockDatabase)
         {
             return books.FirstOrDefault(book => book.Id == id);
         }
-
     }
 
-    public static async Task AddBook(Book book)
+    public static async Task AddBook(Book book, ILogger logger)
     {
         await Task.Delay(500);
 
@@ -51,39 +49,40 @@ public static class Database
         {
             books.Add(book);
         }
-
     }
 
-    public static bool UpdateBook(Book updated)
+    public static bool UpdateBook(Book updated, ILogger logger)
     {
         lock (_lockDatabase)
         {
             var index = books.FindIndex(book => book.Id == updated.Id);
-            if (index == -1) return false;
+            if (index == -1)
+                return false;
 
             books[index] = updated;
             return true;
         }
-
     }
 
-    public static bool RemoveBook(uint id)
+    public static bool RemoveBook(uint id, ILogger logger)
     {
         lock (_lockDatabase)
         {
             var book = books.FirstOrDefault(book => book.Id == id);
-            if (book == null) return false;
+            if (book == null)
+                return false;
 
             books.Remove(book);
             return true;
         }
     }
 
-    public static void SeedDemoData()
+    public static void SeedDemoData(ILogger logger)
     {
         lock (_lockDatabase)
         {
-            if (books.Count > 0) return;
+            if (books.Count > 0)
+                return;
 
             books.Add(
                 new Book(
