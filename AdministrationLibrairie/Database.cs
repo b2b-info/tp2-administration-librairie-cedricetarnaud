@@ -1,13 +1,19 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace BookStore;
 
-public static class Database
+public class Database
 {
+    private readonly Dictionary<int, BookCrud> Cruds = new Dictionary<int, BookCrud> { { 1, new BookCrudId() }, { 2, new BookCrudTitle() } };
+
     private static readonly List<Book> books = new();
     private static readonly object _lockDatabase = new();
-
     private static uint nextId = 1;
 
+    public static void HandleRequest(UInt32 actionRequested)
+    {
 
+    }
     public static int CountRecords()
     {
         lock (_lockDatabase)
@@ -33,7 +39,55 @@ public static class Database
         }
 
     }
+    public static void HandleBookDelete()
+    {
+        Console.WriteLine("1. Delete Book by Id");
+        Console.WriteLine("2. Delete Book by Title");
+        Console.WriteLine("3. Back to Main Menu");
 
+        string operation = ReadUInt("Enter your operation: ");
+       
+        switch (operation)
+        {
+            case 1:
+                DeleteBookById();
+                break;
+
+            case 2:
+                DeleteBookByTitle();
+                break;
+
+            case 3:
+                back = true;
+                break;
+
+            default:
+                Console.WriteLine("Invalid operation, try again");
+                break;
+        }
+    }
+    private static void DeleteBookById()
+    {
+       
+    }
+    private static void DeleteBookByTitle()
+    {
+        string title = ReadNonEmpty("Title: ");
+
+        
+
+        if (books.Count == 0)
+        {
+            Console.WriteLine("No book found with that Title");
+            return;
+        }
+
+        foreach (var book in books)
+        {
+            Database.RemoveBook(book.Id);
+            Console.WriteLine($"Book {book.Title} deleted");
+        }
+    }
     public static Book? GetBookById(uint id)
     {
         lock (_lockDatabase)

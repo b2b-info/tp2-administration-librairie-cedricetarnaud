@@ -7,6 +7,8 @@ public class Book
     public string Author { get; set; }
     public double Price { get; set; }
     public int Quantity { get; set; }
+    private readonly BookCrudId bookCrudId = new();
+    private readonly BookCrudTitle bookCrudTitle = new();
 
     public Book(uint id, string title, string author, double price, int quantity)
     {
@@ -15,5 +17,6 @@ public class Book
         Author = author;
         Price = price;
         Quantity = quantity;
+        
     }
 }

@@ -1,22 +1,38 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\",
+  "WorkspaceRootPath": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\arnaud\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\bookcrudid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:bookcrudid.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\arnaud\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\bookcrud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:bookcrud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\arnaud\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\bookcrudtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:bookcrudtitle.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:database.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\arnaud\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:book.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:main.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\usercredential.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:usercredential.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|c:\\users\\2267339\\documents\\github\\tp2-administration-librairie-cedricetarnaud\\administrationlibrairie\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3B68648F-B785-4DAE-B078-8BA2091D97AA}|AdministrationLibrairie.csproj|solutionrelative:login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,52 +46,109 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Database.cs",
-              "DocumentMoniker": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Database.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Database.cs",
               "RelativeDocumentMoniker": "Database.cs",
-              "ToolTip": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Database.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Database.cs",
               "RelativeToolTip": "Database.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-23T22:21:05.032Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BookCrudTitle.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrudTitle.cs",
+              "RelativeDocumentMoniker": "BookCrudTitle.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrudTitle.cs",
+              "RelativeToolTip": "BookCrudTitle.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T20:54:57.422Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BookCrudId.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrudId.cs",
+              "RelativeDocumentMoniker": "BookCrudId.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrudId.cs",
+              "RelativeToolTip": "BookCrudId.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T20:50:37.252Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Book.cs",
-              "DocumentMoniker": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Book.cs",
-              "RelativeDocumentMoniker": "Book.cs",
-              "ToolTip": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Book.cs",
-              "RelativeToolTip": "Book.cs",
+              "Title": "BookCrud.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrud.cs",
+              "RelativeDocumentMoniker": "BookCrud.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\BookCrud.cs",
+              "RelativeToolTip": "BookCrud.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA4AAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T20:47:22.184Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UserCredential.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\UserCredential.cs",
+              "RelativeDocumentMoniker": "UserCredential.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\UserCredential.cs",
+              "RelativeToolTip": "UserCredential.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T20:44:38.71Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Book.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Book.cs",
+              "RelativeDocumentMoniker": "Book.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Book.cs",
+              "RelativeToolTip": "Book.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-23T22:20:30.879Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 7,
               "Title": "Login.cs",
-              "DocumentMoniker": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Login.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Login.cs",
               "RelativeDocumentMoniker": "Login.cs",
-              "ToolTip": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Login.cs",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Login.cs",
               "RelativeToolTip": "Login.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACkAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-20T17:42:47.643Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "Main.cs",
-              "DocumentMoniker": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Main.cs",
+              "DocumentMoniker": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Main.cs",
               "RelativeDocumentMoniker": "Main.cs",
-              "ToolTip": "C:\\Users\\Arnaud\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Main.cs*",
-              "RelativeToolTip": "Main.cs*",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAkAAAAQAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\2267339\\Documents\\GitHub\\tp2-administration-librairie-cedricetarnaud\\AdministrationLibrairie\\Main.cs",
+              "RelativeToolTip": "Main.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAgwAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-20T17:39:41.975Z",
               "EditorCaption": ""

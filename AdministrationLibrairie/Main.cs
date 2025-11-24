@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 class Program
 {
+
     static async Task Main(string[] args)
     {
         Database.SeedDemoData();
@@ -52,7 +53,7 @@ class Program
             ShowMainMenu();
 
             uint operation = ReadUInt("Enter your operation: ");
-
+            //mettre dans database
             switch (operation)
             {
                 case 1:
@@ -135,67 +136,13 @@ class Program
 
         while (!back)
         {
-            Console.WriteLine("1. Delete Book by Id");
-            Console.WriteLine("2. Delete Book by Title");
-            Console.WriteLine("3. Back to Main Menu");
-
-            uint operation = ReadUInt("Enter your operation: ");
-
-            switch (operation)
-            {
-                case 1:
-                    DeleteBookById();
-                    break;
-
-                case 2:
-                    DeleteBookByTitle();
-                    break;
-
-                case 3:
-                    back = true;
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid operation, try again");
-                    break;
-            }
+           
         }
     }
 
-    private static void DeleteBookById()
-    {
-        uint id = ReadUInt("Id: ");
+   
 
-        if (Database.RemoveBook(id))
-        {
-            Console.WriteLine("Book deleted");
-        }
-        else
-        {
-            Console.WriteLine("Book not found");
-        }
-    }
-
-    private static void DeleteBookByTitle()
-    {
-        string title = ReadNonEmpty("Title: ");
-
-        var books = Database.GetAllBooks().FindAll(b =>
-                string.Equals(b.Title, title, StringComparison.OrdinalIgnoreCase)
-            );
-
-        if (books.Count == 0)
-        {
-            Console.WriteLine("No book found with that Title");
-            return;
-        }
-
-        foreach (var book in books)
-        {
-            Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.Title} deleted");
-        }
-    }
+   
 
     private static void BookInformationMenu()
     {
