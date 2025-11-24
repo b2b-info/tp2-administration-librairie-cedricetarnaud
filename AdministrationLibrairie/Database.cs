@@ -9,7 +9,7 @@ public static class Database
 
     private static uint nextId = 1;
 
-    public static int CountRecords(ILogger logger)
+    public static int CountRecords()
     {
         lock (_lockDatabase)
         {
@@ -17,7 +17,7 @@ public static class Database
         }
     }
 
-    public static bool CheckPkExists(uint pk, ILogger logger)
+    public static bool CheckPkExists(uint pk)
     {
         lock (_lockDatabase)
         {
@@ -25,7 +25,7 @@ public static class Database
         }
     }
 
-    public static List<Book> GetAllBooks(ILogger logger)
+    public static List<Book> GetAllBooks()
     {
         lock (_lockDatabase)
         {
@@ -33,7 +33,7 @@ public static class Database
         }
     }
 
-    public static Book? GetBookById(uint id, ILogger logger)
+    public static Book? GetBookById(uint id)
     {
         lock (_lockDatabase)
         {
@@ -41,7 +41,7 @@ public static class Database
         }
     }
 
-    public static async Task AddBook(Book book, ILogger logger)
+    public static async Task AddBook(Book book)
     {
         await Task.Delay(500);
 
@@ -51,7 +51,7 @@ public static class Database
         }
     }
 
-    public static bool UpdateBook(Book updated, ILogger logger)
+    public static bool UpdateBook(Book updated)
     {
         lock (_lockDatabase)
         {
@@ -64,7 +64,7 @@ public static class Database
         }
     }
 
-    public static bool RemoveBook(uint id, ILogger logger)
+    public static bool RemoveBook(uint id)
     {
         lock (_lockDatabase)
         {
@@ -77,7 +77,7 @@ public static class Database
         }
     }
 
-    public static void SeedDemoData(ILogger logger)
+    public static void SeedDemoData()
     {
         lock (_lockDatabase)
         {
