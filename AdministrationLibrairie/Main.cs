@@ -2,10 +2,17 @@
 
 using System;
 using System.Threading.Tasks;
-
+using Microsoft.Extensions.Logging;
 
 class Program
 {
+    public static ILogger logger = LoggerFactory
+        .Create(builder =>
+        {
+            builder.SetMinimumLevel(LogLevel.Debug).AddConsole();
+        })
+        .CreateLogger<Program>();
+
     static async Task Main(string[] args)
     {
         Database.SeedDemoData();
@@ -14,7 +21,6 @@ class Program
         Console.WriteLine("Please Login");
 
         while (count <= 2)
-
         {
             Login.GetLoginInfo();
 
@@ -181,9 +187,9 @@ class Program
     {
         string title = ReadNonEmpty("Title: ");
 
-        var books = Database.GetAllBooks().FindAll(b =>
-                string.Equals(b.Title, title, StringComparison.OrdinalIgnoreCase)
-            );
+        var books = Database
+            .GetAllBooks()
+            .FindAll(b => string.Equals(b.Title, title, StringComparison.OrdinalIgnoreCase));
 
         if (books.Count == 0)
         {
@@ -271,7 +277,9 @@ class Program
 
         foreach (var b in books)
         {
-            Console.WriteLine($"[{b.Id}] {b.Title} by {b.Author} - {b.Price} ({b.Quantity} in stock)");
+            Console.WriteLine(
+                $"[{b.Id}] {b.Title} by {b.Author} - {b.Price} ({b.Quantity} in stock)"
+            );
         }
     }
 
@@ -303,7 +311,10 @@ class Program
         string finalAuthor = string.IsNullOrWhiteSpace(newAuthor) ? book.Author : newAuthor;
 
         double finalPrice = book.Price;
-        if (!string.IsNullOrWhiteSpace(priceInput) && double.TryParse(priceInput, out var parsedPrice))
+        if (
+            !string.IsNullOrWhiteSpace(priceInput)
+            && double.TryParse(priceInput, out var parsedPrice)
+        )
         {
             finalPrice = parsedPrice;
         }
@@ -325,13 +336,13 @@ class Program
         }
     }
 
-
     private static uint ReadUInt(string prompt)
     {
         while (true)
         {
             Console.Write(prompt);
-            if (uint.TryParse(Console.ReadLine(), out var value)) return value;
+            if (uint.TryParse(Console.ReadLine(), out var value))
+                return value;
 
             Console.WriteLine("Invalid number, try again");
         }
@@ -342,7 +353,8 @@ class Program
         while (true)
         {
             Console.Write(prompt);
-            if (int.TryParse(Console.ReadLine(), out var value)) return value;
+            if (int.TryParse(Console.ReadLine(), out var value))
+                return value;
 
             Console.WriteLine("Invalid number, try again");
         }
@@ -353,7 +365,8 @@ class Program
         while (true)
         {
             Console.Write(prompt);
-            if (double.TryParse(Console.ReadLine(), out var value)) return value;
+            if (double.TryParse(Console.ReadLine(), out var value))
+                return value;
 
             Console.WriteLine("Invalid number, try again");
         }
@@ -365,7 +378,8 @@ class Program
         {
             Console.Write(prompt);
             string? input = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(input)) return input;
+            if (!string.IsNullOrWhiteSpace(input))
+                return input;
 
             Console.WriteLine("Value cannot be empty");
         }
