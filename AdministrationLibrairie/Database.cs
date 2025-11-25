@@ -52,7 +52,7 @@ public class Database
     public static async Task AddBook(Book book)
     {
         await Task.Delay(500);
-
+      
         lock (_lockDatabase)
         {
             books.Add(book);

@@ -58,4 +58,23 @@ using System.Threading.Tasks;
         Console.Write(prompt);
         return Console.ReadLine() ?? "";
     }
+    public static double ReadDoublePositive(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            if (double.TryParse(Console.ReadLine(), out var value) && value >= 0) return value;
+            Console.WriteLine("Invalid number, try again");
+        }
+    }
+    public static int ReadIntPositive(string prompt)
+    {
+        while (true)
+        {
+            Console.Write(prompt);
+            if (int.TryParse(Console.ReadLine(), out var value) && value >= 0) return value;
+
+            Console.WriteLine("Invalid number, try again");
+        }
+    }
 }
