@@ -4,7 +4,7 @@ namespace BookStore;
 
 public class Database
 {
-    private readonly Dictionary<int, IActions> Actions = new Dictionary<int, IActions> { { 1, new BookInformations()}, { 2, new DeleteBook() } };
+    private static readonly Dictionary<int, IActions> Actions = new Dictionary<int, IActions> { { 1, new BookInformations()}, { 2, new DeleteBook() } };
 
     private static readonly List<Book> books = new();
     private static readonly object _lockDatabase = new();
@@ -12,7 +12,7 @@ public class Database
 
     public static void HandleRequest(UInt32 actionRequested)
     {
-
+        Actions[actionRequested].PerformAction
     }
     public static int CountRecords()
     {
@@ -39,41 +39,7 @@ public class Database
         }
 
     }
-    public static void HandleBookDelete()
-    {
-        Console.WriteLine("1. Delete Book by Id");
-        Console.WriteLine("2. Delete Book by Title");
-        Console.WriteLine("3. Back to Main Menu");
 
-        string operation = ReadUInt("Enter your operation: ");
-       
-        switch (operation)
-        {
-            case 1:
-                DeleteBookById();
-                break;
-
-            case 2:
-                DeleteBookByTitle();
-                break;
-
-            case 3:
-                back = true;
-                break;
-
-            default:
-                Console.WriteLine("Invalid operation, try again");
-                break;
-        }
-    }
-    private static void DeleteBookById()
-    {
-       
-    }
-    private static void DeleteBookByTitle()
-    {
-       
-    }
     public static Book? GetBookById(uint id)
     {
         lock (_lockDatabase)

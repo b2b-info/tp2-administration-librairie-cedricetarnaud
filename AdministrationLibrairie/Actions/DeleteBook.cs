@@ -7,46 +7,40 @@ using System.Threading.Tasks;
 using static System.Reflection.Metadata.BlobBuilder;
 
 
-internal class DeleteBook : IActions
+public class DeleteBook : IActions
 {
+    private readonly Dictionary<int,Action> choices = new Dictionary<int, Action> { { 1, DeleteBookById},{2,DeleteBookByTitle} };
     public void PerformAction()
     {
+        Console.WriteLine("1. Delete book by Id");
+        Console.WriteLine("2. Delete book by Title");
         
+        choices[choice].Invoke();
     }
-    private Action DeleteBookByTitle = () => 
+    private static readonly Action DeleteBookByTitle = () => 
     {
         string title = ToolBox.ReadNonEmpty("Title: ");
 
+        int removedBooks = Database.GetAllBooks().RemoveAll(book => book.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase));
 
-
-        if (books.Count == 0)
+        if (removedBooks == 0)
         {
             Console.WriteLine("No book found with that Title");
             return;
         }
 
-        foreach (var book in books)
-        {
-            Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.Title} deleted");
-        }
+        Console.WriteLine($"{removedBooks}books removed from the library");
     };
-    private Action DeleteBookById = () => 
+    private static readonly Action DeleteBookById = () => 
     {
-        string title = ToolBox.ReadNonEmpty("Title: ");
-
-
-
-        if (books.Count == 0)
+        uint id = ToolBox.ReadUInt("Id: ");
+        Book? book =  Database.GetBookById(id);
+        if (book == null)
         {
-            Console.WriteLine("No book found with that Title");
+            Console.WriteLine("No book found with that id");
             return;
         }
-
-        foreach (var book in books)
-        {
-            Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.Title} deleted");
-        }
+        Database.RemoveBook(book.Id);
+        Console.WriteLine($"Book {book.Title} deleted");
     };
 }
