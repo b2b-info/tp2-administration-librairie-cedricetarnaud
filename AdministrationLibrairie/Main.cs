@@ -40,7 +40,7 @@ class Program
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Too many failed attempts....");
-                    logger.LogError("Application exiting due to too many failed login attempts");
+                    logger.LogError("Application exiting due to too many failed login attempts.");
                     Environment.Exit(0);
                 }
                 else
@@ -66,37 +66,45 @@ class Program
             ShowMainMenu();
 
             uint operation = ReadUInt("Enter your operation: ");
+            logger.LogDebug($"User selected option: {operation}.");
 
             switch (operation)
             {
                 case 1:
+                    logger.LogInformation("Starting AddBookFlow.");
                     Console.WriteLine("\nAdd Book:");
                     await AddBookFlow();
                     break;
 
                 case 2:
+                    logger.LogInformation("Starting DeleteBookMenu.");
                     DeleteBookMenu();
                     break;
 
                 case 3:
+                    logger.LogInformation("Starting BookInformationMenu.");
                     BookInformationMenu();
                     break;
 
                 case 4:
+                    logger.LogInformation("Starting UpdateBookById.");
                     Console.WriteLine("\nUpdate book:");
                     UpdateBookById();
                     break;
 
                 case 5:
+                    logger.LogInformation("Console Cleared.");
                     Console.Clear();
                     break;
 
                 case 6:
+                    logger.LogInformation("User requested exit.");
                     Console.WriteLine("Exiting program....");
                     exit = true;
                     break;
 
                 default:
+                    logger.LogInformation($"Invalid operation entered: {operation}.");
                     Console.WriteLine("Invalid operation. Try again");
                     break;
             }
@@ -108,10 +116,13 @@ class Program
                 Console.ReadLine();
             }
         }
+        logger.LogInformation("Application exiting");
     }
 
     private static void ShowMainMenu()
     {
+        logger.LogInformation("Displaying main menu.");
+
         Console.WriteLine("====================================");
         Console.WriteLine("1. Add Book");
         Console.WriteLine("2. Delete Book");
@@ -125,17 +136,27 @@ class Program
     private static async Task AddBookFlow()
     {
         uint id = ReadUInt("Id: ");
+        logger.LogDebug($"User entered Id: {id}.");
 
         if (Database.CheckPkExists(id))
         {
+            logger.LogWarning($"AddBookFlow aborted: Id {id} already exist.");
             Console.WriteLine("A book with this Id already exists");
             return;
         }
 
         string title = ReadNonEmpty("Title: ");
+        logger.LogDebug($"User entered Title: {title}.");
+
         string author = ReadNonEmpty("Author: ");
+        logger.LogDebug($"User entered Author: {author}.");
+        
         double price = ReadDouble("Price: ");
+        logger.LogDebug($"User entered Price: {price}.");
+
         int quantity = ReadInt("Quantity: ");
+        logger.LogDebug($"User entered Quantity: {quantity}.");
+
 
         var book = new Book(id, title, author, price, quantity);
         await Database.AddBook(book);
@@ -149,35 +170,46 @@ class Program
 
         while (!back)
         {
+            logger.LogInformation("Displaying DeleteBookMenu options.");
+
             Console.WriteLine("1. Delete Book by Id");
             Console.WriteLine("2. Delete Book by Title");
             Console.WriteLine("3. Back to Main Menu");
 
             uint operation = ReadUInt("Enter your operation: ");
+            logger.LogDebug($"User selected option: {operation} in DeleteBookMenu.");
 
             switch (operation)
             {
                 case 1:
+                    logger.LogInformation("User choose to DeleteBookById.");
                     DeleteBookById();
                     break;
 
                 case 2:
+                    logger.LogInformation("User choose to DeleteBookByTitle.");
                     DeleteBookByTitle();
                     break;
 
                 case 3:
+                    logger.LogInformation("User choose to go back to the Main Menu.");
                     back = true;
                     break;
 
                 default:
+                    logger.LogWarning($"Invalid operation entered in DeleteBookMenu: {operation}.");
                     Console.WriteLine("Invalid operation, try again");
                     break;
             }
         }
+
+        logger.LogInformation("Exiting DeleteBookMenu.");
     }
 
     private static void DeleteBookById()
     {
+        logger.LogInformation("Starting DeleteBookById.");
+
         uint id = ReadUInt("Id: ");
 
         if (Database.RemoveBook(id))
@@ -188,11 +220,16 @@ class Program
         {
             Console.WriteLine("Book not found");
         }
+
+        logger.LogInformation("Exiting DeleteBookById.");
     }
 
     private static void DeleteBookByTitle()
     {
+        logger.LogInformation("Starting DeleteBookByTitle.");
+
         string title = ReadNonEmpty("Title: ");
+        logger.LogDebug($"User entered Title: {title}");
 
         var books = Database
             .GetAllBooks()
@@ -200,6 +237,7 @@ class Program
 
         if (books.Count == 0)
         {
+            logger.LogWarning($"No books with Title: {title}.");
             Console.WriteLine("No book found with that Title");
             return;
         }
@@ -207,55 +245,73 @@ class Program
         foreach (var book in books)
         {
             Database.RemoveBook(book.Id);
+            logger.LogInformation($"Book deleted: {book.Title}.");
             Console.WriteLine($"Book {book.Title} deleted");
         }
+
+        logger.LogInformation("Exiting DeleteBookByTitle.");
     }
 
     private static void BookInformationMenu()
     {
+        logger.LogInformation("Starting BookInformationMenu.");
+
         bool back = false;
 
         while (!back)
         {
+            logger.LogInformation("Displaying BookInformationMenu options.");
+
             Console.WriteLine("1. Show Book Details by Id");
             Console.WriteLine("2. Show Book Count");
             Console.WriteLine("3. Show All Books");
             Console.WriteLine("4. Back to Main Menu");
 
             uint operation = ReadUInt("Enter your operation: ");
+            logger.LogDebug($"User selected operation: {operation} in BookInformationMenu.");
 
             switch (operation)
             {
                 case 1:
+                    logger.LogInformation("User choose to ShowBookDetailById");
                     ShowBookDetailById();
                     break;
 
                 case 2:
+                    logger.LogInformation("User choose to ShowBookCount");
                     ShowBookCount();
                     break;
 
                 case 3:
+                    logger.LogInformation("User choose to ShowAllBooks");
                     ShowAllBooks();
                     break;
 
                 case 4:
+                    logger.LogInformation("User choose to go back to the Main Menu.");
                     back = true;
                     break;
 
                 default:
+                    logger.LogWarning($"Invalid operation entered in DeleteBookMenu: {operation}.");
                     Console.WriteLine("Invalid operation, try again");
                     break;
             }
         }
+
+        logger.LogInformation("Exiting BookInformationMenu.");
     }
 
     private static void ShowBookDetailById()
     {
-        uint id = ReadUInt("Id: ");
-        var book = Database.GetBookById(id);
+        logger.LogInformation("Starting ShowBookDetailById");
 
+        uint id = ReadUInt("Id: ");
+        logger.LogDebug($"User entered Id: {id}.");
+
+        var book = Database.GetBookById(id);
         if (book == null)
-        {
+        {   
             Console.WriteLine("Book not found");
             return;
         }
@@ -265,29 +321,41 @@ class Program
         Console.WriteLine($"Author: {book.Author}");
         Console.WriteLine($"Price: {book.Price}");
         Console.WriteLine($"Quantity: {book.Quantity}");
+
+        logger.LogInformation("Exiting ShowBookDetailById");
     }
 
     private static void ShowBookCount()
     {
+        logger.LogInformation("Starting ShowBookCount");
         Console.WriteLine($"Total books: {Database.CountRecords()}");
+
+        logger.LogInformation("Exiting ShowBookCount");
     }
 
     private static void ShowAllBooks()
     {
+         logger.LogInformation("Starting ShowAllBooks");
+
         var books = Database.GetAllBooks();
 
         if (books.Count == 0)
         {
+            logger.LogWarning("No book in the store");
             Console.WriteLine("No books in the store");
+            logger.LogInformation("Exiting ShowAllBooks");
             return;
         }
 
         foreach (var b in books)
         {
+            logger.LogDebug("Displaying book: {@Book}", b);
             Console.WriteLine(
                 $"[{b.Id}] {b.Title} by {b.Author} - {b.Price} ({b.Quantity} in stock)"
             );
         }
+
+        logger.LogInformation("Exiting ShowAllBooks");
     }
 
     private static void UpdateBookById()
