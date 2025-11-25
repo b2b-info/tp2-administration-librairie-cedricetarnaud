@@ -15,7 +15,10 @@ class Program
 
     static async Task Main(string[] args)
     {
+        logger.LogInformation("Application started.");
+
         Database.SeedDemoData();
+        logger.LogInformation("Database seed with demo data.");
 
         uint count = 0;
         Console.WriteLine("Please Login");
@@ -26,27 +29,31 @@ class Program
 
             if (Login.IsLoggedIn())
             {
+                logger.LogInformation($"User successfully logged in.");
                 Console.Clear();
                 break;
             }
             else
             {
+                
                 if (count == 2)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Too many failed attempts....");
+                    logger.LogError("Application exiting due to too many failed login attempts");
                     Environment.Exit(0);
                 }
                 else
                 {
+                    count++;
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid credentials. Try again....");
+                    logger.LogWarning($"Failed login attempt: {count}");
                     Console.ResetColor();
-                    count++;
                 }
             }
         }
-
+        logger.LogInformation("Starting main menu loop.");
         await RunMenuLoop();
     }
 
