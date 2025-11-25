@@ -273,17 +273,17 @@ class Program
             switch (operation)
             {
                 case 1:
-                    logger.LogInformation("User choose to ShowBookDetailById");
+                    logger.LogInformation("User choose to ShowBookDetailById.");
                     ShowBookDetailById();
                     break;
 
                 case 2:
-                    logger.LogInformation("User choose to ShowBookCount");
+                    logger.LogInformation("User choose to ShowBookCount.");
                     ShowBookCount();
                     break;
 
                 case 3:
-                    logger.LogInformation("User choose to ShowAllBooks");
+                    logger.LogInformation("User choose to ShowAllBooks.");
                     ShowAllBooks();
                     break;
 
@@ -304,7 +304,7 @@ class Program
 
     private static void ShowBookDetailById()
     {
-        logger.LogInformation("Starting ShowBookDetailById");
+        logger.LogInformation("Starting ShowBookDetailById.");
 
         uint id = ReadUInt("Id: ");
         logger.LogDebug($"User entered Id: {id}.");
@@ -322,7 +322,7 @@ class Program
         Console.WriteLine($"Price: {book.Price}");
         Console.WriteLine($"Quantity: {book.Quantity}");
 
-        logger.LogInformation("Exiting ShowBookDetailById");
+        logger.LogInformation("Exiting ShowBookDetailById.");
     }
 
     private static void ShowBookCount()
@@ -335,27 +335,27 @@ class Program
 
     private static void ShowAllBooks()
     {
-         logger.LogInformation("Starting ShowAllBooks");
+         logger.LogInformation("Starting ShowAllBooks.");
 
         var books = Database.GetAllBooks();
 
         if (books.Count == 0)
         {
-            logger.LogWarning("No book in the store");
+            logger.LogWarning("No book in the store.");
             Console.WriteLine("No books in the store");
-            logger.LogInformation("Exiting ShowAllBooks");
+            logger.LogInformation("Exiting ShowAllBooks.");
             return;
         }
 
         foreach (var b in books)
         {
-            logger.LogDebug("Displaying book: {@Book}", b);
+            logger.LogDebug("Displaying book: {@Book}.", b);
             Console.WriteLine(
                 $"[{b.Id}] {b.Title} by {b.Author} - {b.Price} ({b.Quantity} in stock)"
             );
         }
 
-        logger.LogInformation("Exiting ShowAllBooks");
+        logger.LogInformation("Exiting ShowAllBooks.");
     }
 
     private static void UpdateBookById()
@@ -416,9 +416,16 @@ class Program
         while (true)
         {
             Console.Write(prompt);
-            if (uint.TryParse(Console.ReadLine(), out var value))
-                return value;
+            string input = Console.ReadLine();
+            logger.LogDebug($"User input for prompt '{prompt}' is: {input}.");
 
+            if (uint.TryParse(input, out var value))
+            {
+                logger.LogInformation($"Parsed uint successfully: {value}.");
+                return value;
+            }
+                
+            logger.LogWarning($"Invalid uint entered: {input}.");
             Console.WriteLine("Invalid number, try again");
         }
     }
@@ -428,9 +435,16 @@ class Program
         while (true)
         {
             Console.Write(prompt);
-            if (int.TryParse(Console.ReadLine(), out var value))
-                return value;
+            string input = Console.ReadLine();
+            logger.LogDebug($"User input for prompt '{prompt}' is: {input}.");
 
+            if (int.TryParse(input, out var value))
+            {
+                logger.LogInformation($"Parsed int successfully: {value}.");
+                return value;
+            }
+                
+            logger.LogWarning($"Invalid int entered: {input}.");
             Console.WriteLine("Invalid number, try again");
         }
     }
@@ -440,9 +454,16 @@ class Program
         while (true)
         {
             Console.Write(prompt);
-            if (double.TryParse(Console.ReadLine(), out var value))
-                return value;
+            string input = Console.ReadLine();
+            logger.LogDebug($"User input for prompt '{prompt}' is: {input}.");
 
+            if (double.TryParse(input, out var value))
+            {
+                logger.LogInformation($"Parsed double successfully: {value}.");
+                return value;
+            }
+                
+            logger.LogWarning($"Invalid double entered: {input}.");
             Console.WriteLine("Invalid number, try again");
         }
     }
@@ -453,9 +474,15 @@ class Program
         {
             Console.Write(prompt);
             string? input = Console.ReadLine();
-            if (!string.IsNullOrWhiteSpace(input))
-                return input;
+            logger.LogDebug($"User input for prompt '{prompt}' is: {input}.");
 
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                logger.LogInformation($"Valid non-empty inpu received: {input}.");
+                return input;
+            }
+                
+            logger.LogWarning($"Empty input entered for promt: '{prompt}'.");
             Console.WriteLine("Value cannot be empty");
         }
     }
@@ -463,6 +490,20 @@ class Program
     private static string ReadOptional(string prompt)
     {
         Console.Write(prompt);
-        return Console.ReadLine() ?? "";
+        string? input = Console.ReadLine();
+        string result;
+
+        if (string.IsNullOrWhiteSpace(input))
+        {
+            result = "";
+            logger.LogWarning($"User input for prompt '{prompt}' was empty.");
+        }
+        else
+        {
+            logger.LogDebug($"User input for prompt '{prompt}' is: {input}");
+            result = input;
+        }
+
+        return  result;
     }
 }
