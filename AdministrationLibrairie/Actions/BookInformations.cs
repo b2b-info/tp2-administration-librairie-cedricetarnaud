@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class BookInformations : IActions
+public class BookInformations : IOperations
 {
     private readonly Dictionary<int,Action> Operations = new Dictionary<int, Action> { {1, ShowBookDetailsById},{ 2,ShowBookCount}, {3,ShowAllBooks },{4,BackToMainMenu } };
     public void PerformAction()

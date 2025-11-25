@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using static System.Reflection.Metadata.BlobBuilder;
 
 
-public class DeleteBook : IActions
+public class DeleteBook : IOperations
 {
     private readonly Dictionary<int,Action> choices = new Dictionary<int, Action> { { 1, DeleteBookById},{2,DeleteBookByTitle} };
     public void PerformAction()

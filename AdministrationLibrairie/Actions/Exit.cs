@@ -1,13 +1,15 @@
-﻿using BookStore;
+﻿namespace BookStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
-    public interface IActions
+internal class Exit : IOperations
+{
+    public void PerformAction()
     {
-        public void PerformAction();
+        Environment.Exit(0);
     }
+}
 

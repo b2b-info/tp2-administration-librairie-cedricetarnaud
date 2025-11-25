@@ -6,11 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class ClearScreen : IOperations
-{
-    public void PerformAction()
+    public interface IOperations
     {
-        Console.Clear();
+        public void PerformAction();
     }
-}
 

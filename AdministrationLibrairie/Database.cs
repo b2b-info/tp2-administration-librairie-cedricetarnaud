@@ -4,16 +4,12 @@ namespace BookStore;
 
 public class Database
 {
-    private static readonly Dictionary<int, IActions> Actions = new Dictionary<int, IActions> { { 1, new BookInformations()}, { 2, new DeleteBook() } };
 
     private static readonly List<Book> books = new();
     private static readonly object _lockDatabase = new();
     private static uint nextId = 1;
 
-    public static void HandleRequest(UInt32 actionRequested)
-    {
-        Actions[actionRequested].PerformAction
-    }
+  
     public static int CountRecords()
     {
         lock (_lockDatabase)
