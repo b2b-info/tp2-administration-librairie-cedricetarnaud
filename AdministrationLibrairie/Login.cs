@@ -17,11 +17,16 @@ public class Login
 
     public static void GetLoginInfo()
     {
+        Program.logger.LogInformation("User need to enter his Username and Password to login");
+        
         Console.Write("Username: ");
         userName = Console.ReadLine();
 
         Console.Write("Password: ");
         passWord = Console.ReadLine();
+
+        Program.logger.LogDebug("Username: " + userName + ", Password: " + passWord);
+        Program.logger.LogInformation("Username and Password entered");
     }
 
     public static bool IsLoggedIn()
