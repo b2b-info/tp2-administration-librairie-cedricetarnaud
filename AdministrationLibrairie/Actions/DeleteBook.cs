@@ -14,7 +14,8 @@ public class DeleteBook : IActions
     {
         Console.WriteLine("1. Delete book by Id");
         Console.WriteLine("2. Delete book by Title");
-        
+        Console.WriteLine("3. Back to Main Menu");
+        int choice = ToolBox.ReadInt("Enter operation : ");
         choices[choice].Invoke();
     }
     private static readonly Action DeleteBookByTitle = () => 

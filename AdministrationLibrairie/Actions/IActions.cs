@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 
     public interface IActions
     {
-    public void PerformAction(int choice);
+        public void PerformAction();
     }
 
