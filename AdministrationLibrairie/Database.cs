@@ -4,7 +4,7 @@ namespace BookStore;
 
 public class Database
 {
-    private readonly Dictionary<int, BookCrud> Cruds = new Dictionary<int, BookCrud> { { 1, new BookCrudId() }, { 2, new BookCrudTitle() } };
+    private readonly Dictionary<int, IActions> Actions = new Dictionary<int, IActions> { { 1, new BookInformations()}, { 2, new DeleteBook() } };
 
     private static readonly List<Book> books = new();
     private static readonly object _lockDatabase = new();
@@ -72,21 +72,7 @@ public class Database
     }
     private static void DeleteBookByTitle()
     {
-        string title = ReadNonEmpty("Title: ");
-
-        
-
-        if (books.Count == 0)
-        {
-            Console.WriteLine("No book found with that Title");
-            return;
-        }
-
-        foreach (var book in books)
-        {
-            Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.Title} deleted");
-        }
+       
     }
     public static Book? GetBookById(uint id)
     {

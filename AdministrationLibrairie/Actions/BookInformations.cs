@@ -5,7 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    public class BookInformations
+public class BookInformations : IActions
+{
+    public void PerformAction()
     {
+        throw new NotImplementedException();
     }
+}
 
