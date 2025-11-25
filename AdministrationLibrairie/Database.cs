@@ -11,68 +11,119 @@ public static class Database
 
     public static int CountRecords()
     {
+        Program.logger.LogInformation($"Counting the number of books in the database.");
         lock (_lockDatabase)
         {
-            return books.Count;
+            int count = books.Count;
+            Program.logger.LogDebug($"Counting records: {count} books found.");
+            return count;
         }
     }
 
     public static bool CheckPkExists(uint pk)
     {
+        Program.logger.LogInformation($"Checking if {pk} exist in the database.");
         lock (_lockDatabase)
         {
-            return books.Any(book => book.Id == pk);
+            bool exists = books.Any(book => book.Id == pk);
+
+            if (exists)
+            {
+                Program.logger.LogInformation($"Primary key {pk} found in the database.");
+            }
+            else
+            {
+                Program.logger.LogWarning($"Primary key {pk} does not exist in the database.");
+            }
+
+            return exists;
         }
     }
 
     public static List<Book> GetAllBooks()
     {
+        Program.logger.LogInformation($"Retrieving all books from the database.");
         lock (_lockDatabase)
         {
-            return books.ToList();
+            var listBooks = books.ToList();
+            int count = listBooks.Count;
+
+            Program.logger.LogDebug($"Retrieving {count} books from the database.");
+
+            return listBooks;
         }
     }
 
     public static Book? GetBookById(uint id)
     {
+        Program.logger.LogInformation($"Looking up for the book with ID: {id}.");
         lock (_lockDatabase)
         {
-            return books.FirstOrDefault(book => book.Id == id);
+            var book = books.FirstOrDefault(book => book.Id == id);
+
+            if(book != null)
+            {
+                Program.logger.LogInformation($"Book with ID {id} found.");
+            }
+            else
+            {
+                Program.logger.LogWarning($"Book with ID {id} not found.");
+            }
+
+            return book;
         }
     }
 
     public static async Task AddBook(Book book)
     {
+        Program.logger.LogInformation($"Adding book with ID: {book.Id} started.");
         await Task.Delay(500);
 
         lock (_lockDatabase)
         {
             books.Add(book);
         }
+
+        Program.logger.LogInformation($"Book successfully added with ID: {book.Id} and Title: {book.Title}.");
     }
 
     public static bool UpdateBook(Book updated)
     {
+        Program.logger.LogInformation($"Updating book with ID: {updated.Id} started.");
+
         lock (_lockDatabase)
         {
             var index = books.FindIndex(book => book.Id == updated.Id);
             if (index == -1)
+            {
+                Program.logger.LogWarning($"Updating failed. Book with ID: {updated.Id} was not found.");
                 return false;
+            }
+                
 
             books[index] = updated;
+
+            Program.logger.LogInformation($"Book successfully updated with ID: {updated.Id} and Title: {updated.Title}");
             return true;
         }
     }
 
     public static bool RemoveBook(uint id)
     {
+        Program.logger.LogInformation($"Removing book with ID: {id}.");
         lock (_lockDatabase)
         {
             var book = books.FirstOrDefault(book => book.Id == id);
             if (book == null)
+            {
+                Program.logger.LogWarning($"Removing failed. Book with ID: {id} was not found.");
                 return false;
+            }
+                
 
             books.Remove(book);
+
+            Program.logger.LogInformation($"Book successfully removed with ID: {id}");
             return true;
         }
     }
@@ -82,7 +133,11 @@ public static class Database
         lock (_lockDatabase)
         {
             if (books.Count > 0)
+            {
+                Program.logger.LogDebug("SeedDemoData skipped. Database already contains books.");
                 return;
+            }
+                
 
             books.Add(
                 new Book(
@@ -129,6 +184,7 @@ public static class Database
                     quantity: 12
                 )
             );
+            Program.logger.LogInformation($"SeedDemoData completed. {books.Count} Demo books added to the database.");
         }
     }
 }

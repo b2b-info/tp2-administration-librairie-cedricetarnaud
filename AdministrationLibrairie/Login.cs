@@ -17,26 +17,38 @@ public class Login
 
     public static void GetLoginInfo()
     {
-        Program.logger.LogInformation("User need to enter his Username and Password to login");
-        
+        Program.logger.LogInformation("User need to enter his Username and Password to login.");
+
         Console.Write("Username: ");
         userName = Console.ReadLine();
 
         Console.Write("Password: ");
         passWord = Console.ReadLine();
 
-        Program.logger.LogDebug("Username: " + userName + ", Password: " + passWord);
-        Program.logger.LogInformation("Username and Password entered");
+        Program.logger.LogDebug($"Username: {userName}, Password: {passWord}.");
+        Program.logger.LogInformation("Username and Password entered.");
     }
 
     public static bool IsLoggedIn()
     {
+        Program.logger.LogDebug("Checking login attempt.");
         lock (_lockLogin)
         {
-            return _users.Any(user =>
+            bool success = _users.Any(user =>
                 string.Equals(user.UserName, userName, StringComparison.OrdinalIgnoreCase)
                 && user.Password == passWord
             );
+
+            if (success)
+            {
+                Program.logger.LogInformation($"Login successful for user: {userName}");
+            }
+            else
+            {
+                Program.logger.LogWarning($"Login failed for user: {userName}");
+            }
+
+            return success;
         }
     }
 }
