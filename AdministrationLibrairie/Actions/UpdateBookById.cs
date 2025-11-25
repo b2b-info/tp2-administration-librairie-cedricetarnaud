@@ -19,7 +19,13 @@ using System.Threading.Tasks;
             Console.WriteLine("Book not found");
             return;
         }
-            Console.WriteLine("Leave empty to keep the current value");
+
+        string finalTitle = book.Title;
+        string finalAuthor = book.Author; 
+        double finalPrice = book.Price;
+        int finalQuantity = book.Quantity;
+        Console.WriteLine("Leave empty to keep the current value");
+
         Console.WriteLine($"Current Title: {book.Title}");
         string newTitle = ToolBox.ReadOptional("New Title: ");
 
@@ -27,27 +33,15 @@ using System.Threading.Tasks;
         string newAuthor = ToolBox.ReadOptional("New Author: ");
 
         Console.WriteLine($"Current Price: {book.Price}");
-        string priceInput = ToolBox.ReadOptional("New Price: ");
+        string newPrice = ToolBox.ReadOptional("New Price: ");
 
         Console.WriteLine($"Current Quantity: {book.Quantity}");
-        string qtyInput = ToolBox.ReadOptional("New Quantity: ");
+        string newQuantity = ToolBox.ReadOptional("New Quantity: ");
 
-        string finalTitle = string.IsNullOrWhiteSpace(newTitle) ? book.Title : newTitle;
-        string finalAuthor = string.IsNullOrWhiteSpace(newAuthor) ? book.Author : newAuthor;
+        AssignEntries(newTitle, newAuthor, newPrice, newQuantity, ref finalTitle, ref finalAuthor, ref finalPrice, ref finalQuantity);
 
-        double finalPrice = book.Price;
-        if (!string.IsNullOrWhiteSpace(priceInput) && double.TryParse(priceInput, out var parsedPrice))
-        {
-            finalPrice = parsedPrice;
-        }
+        Book updated = new (id, finalTitle, finalAuthor, finalPrice, finalQuantity);
 
-        int finalQuantity = book.Quantity;
-        if (!string.IsNullOrWhiteSpace(qtyInput) && int.TryParse(qtyInput, out var parsedQty))
-        {
-            finalQuantity = parsedQty;
-        }
-
-        var updated = new Book(id, finalTitle, finalAuthor, finalPrice, finalQuantity);
         if (Database.UpdateBook(updated))
         {
             Console.WriteLine("Book updated");
@@ -55,6 +49,23 @@ using System.Threading.Tasks;
         else
         {
             Console.WriteLine("Book could not be updated");
+        }
+    }
+    private void AssignEntries(string newTitle,string newAuthor,string newPrice, string newQuantity,ref string finalTitle, ref string finalAuthor, ref double finalPrice, ref int finalQuantity)
+    {
+        if(string.IsNullOrEmpty(newTitle)) finalTitle = newTitle;
+
+        if(string.IsNullOrEmpty(newAuthor)) finalAuthor = newAuthor;
+
+         
+        if (!string.IsNullOrWhiteSpace(newPrice) && double.TryParse(newPrice, out var parsedPrice))
+        {
+            finalPrice = parsedPrice;
+        }
+
+        if (!string.IsNullOrWhiteSpace(newQuantity) && int.TryParse(newQuantity, out var parsedQty))
+        {
+            finalQuantity = parsedQty;
         }
     }
 }
