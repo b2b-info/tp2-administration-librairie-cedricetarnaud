@@ -7,18 +7,18 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    internal class UpdateBookById : Operations
+    public class UpdateBookById : Operations
     {
-
-    private Book _updateBook;
-
-    public override int Id { get; set; }
-
+    private uint _updatedBookId = 0;
+    private string  _updatedTitle = "default";
+    private string _updatedAuthor = "default";
+    private int _updatedQuantity = 0;
+    private double _updatedPrice = 0;
 
     public override void PerformAction()
     {
-        uint id = ToolBox.ReadUInt("Id: ");
-        var book = Database.GetBookById(id);
+        _updatedBookId = ToolBox.ReadUInt("Id: ");
+        var book = Database.GetBookById(_updatedBookId);
 
         if (book == null)
         {
@@ -26,10 +26,10 @@ using System.Threading.Tasks;
             return;
         }
 
-        string finalTitle = book.Title;
-        string finalAuthor = book.Author; 
-        double finalPrice = book.Price;
-        int finalQuantity = book.Quantity;
+        _updatedTitle = book.Title;
+        _updatedAuthor = book.Author;
+        _updatedPrice = book.Price;
+        _updatedQuantity = book.Quantity;
         Console.WriteLine("Leave empty to keep the current value");
 
         Console.WriteLine($"Current Title: {book.Title}");
@@ -44,16 +44,11 @@ using System.Threading.Tasks;
         Console.WriteLine($"Current Quantity: {book.Quantity}");
         string newQuantity = ToolBox.ReadOptional("New Quantity: ");
 
-        AssignEntries(newTitle, newAuthor, newPrice, newQuantity, ref finalTitle, ref finalAuthor, ref finalPrice, ref finalQuantity);
-
-        Book _updateBook = new (id, finalTitle, finalAuthor, finalPrice, finalQuantity);
-
-        Program.IncrementId();
-        
+        AssignEntries(newTitle, newAuthor, newPrice, newQuantity);
     }
 
     public override void Product () {
-        if (Database.UpdateBook(_updateBook))
+        if (Database.UpdateBook(new Book(_updatedBookId, _updatedTitle, _updatedAuthor,_updatedPrice,_updatedQuantity)))
         {
             Console.WriteLine("Book updated");
         }
@@ -63,28 +58,23 @@ using System.Threading.Tasks;
         }
     }
 
-    private void AssignEntries(string newTitle,string newAuthor,string newPrice, string newQuantity,ref string finalTitle, ref string finalAuthor, ref double finalPrice, ref int finalQuantity)
+    private void AssignEntries(string newTitle,string newAuthor,string newPrice, string newQuantity)
     {
-        if(string.IsNullOrEmpty(newTitle)) finalTitle = newTitle;
+        if(string.IsNullOrEmpty(newTitle)) _updatedTitle = newTitle;
 
-        if(string.IsNullOrEmpty(newAuthor)) finalAuthor = newAuthor;
+        if(string.IsNullOrEmpty(newAuthor)) _updatedTitle = newAuthor;
 
          
         if (!string.IsNullOrWhiteSpace(newPrice) && double.TryParse(newPrice, out var parsedPrice))
         {
-            finalPrice = parsedPrice;
+            _updatedPrice = parsedPrice;
         }
 
         if (!string.IsNullOrWhiteSpace(newQuantity) && int.TryParse(newQuantity, out var parsedQty))
         {
-            finalQuantity = parsedQty;
+            _updatedQuantity = parsedQty;
         }
-    }
-    private void blabla()
-    {
-     
-    }
-    
+    }    
 }
 
    

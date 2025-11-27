@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
     public abstract class Operations
     {
-        public abstract int Id { get; set; }
+        
         public abstract void PerformAction();
         public  abstract void Product();
     }
