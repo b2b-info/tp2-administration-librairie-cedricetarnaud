@@ -34,3 +34,12 @@ stateDiagram-v2
 
     En_Succès --> En_Attente : reset
     En_Échec --> En_Attente : reset
+
+## 3. Auteurs
+
+- **Arnaud Simard-Desmeules** – Développeur   
+- **Cedryk Leblanc** – Développeur 
+
+
+
+
