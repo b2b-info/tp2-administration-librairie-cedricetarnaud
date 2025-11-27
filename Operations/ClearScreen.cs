@@ -6,10 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    public abstract class Operations
+public class ClearScreen : Operations
+{
+    public override void ExecuteState()
     {
-        
-        public abstract void PerformAction();
-        public  abstract void Product();
+        Console.Clear();
     }
+
+    
+    
+}
 

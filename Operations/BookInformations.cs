@@ -6,27 +6,31 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class BookInformations : IOperations
+public class BookInformations : Operations
 {
     private readonly Dictionary<int,Action> Operations = new Dictionary<int, Action> { {1, ShowBookDetailsById},{ 2,ShowBookCount}, {3,ShowAllBooks },{4,BackToMainMenu } };
-    public void PerformAction()
+    public override void ExecuteState()
     {
-        bool choiceInvalidValid = true;
-        while (choiceInvalidValid)
+        if (operationsStates == OperationsStates.Waiting)
         {
-            Console.WriteLine("1. Show Book Details by Id");
-            Console.WriteLine("2. Show Book Count");
-            Console.WriteLine("3. Show All Books");
-            Console.WriteLine("4. Back to Main Menu");
-            int choice = ToolBox.ReadInt("Enter you operation: ");
-            if (!Operations.ContainsKey(choice))
+            bool choiceInvalidValid = true;
+            while (choiceInvalidValid)
             {
-                Console.WriteLine("Invalid choice \n");
-                continue;
+                Console.WriteLine("1. Show Book Details by Id");
+                Console.WriteLine("2. Show Book Count");
+                Console.WriteLine("3. Show All Books");
+                Console.WriteLine("4. Back to Main Menu");
+                int choice = ToolBox.ReadInt("Enter you operation: ");
+                if (!Operations.ContainsKey(choice))
+                {
+                    Console.WriteLine("Invalid choice \n");
+                    continue;
+                }
+                choiceInvalidValid = false;
+                Operations[choice]?.Invoke();
             }
-            choiceInvalidValid = false;
-            Operations[choice]?.Invoke();
         }
+      
     }
 
     private  static readonly Action ShowBookDetailsById = () => 

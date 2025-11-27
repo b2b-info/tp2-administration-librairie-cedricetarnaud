@@ -15,11 +15,9 @@ public class Database
   
     public static int CountRecords()
     {
-        Program.logger.LogInformation($"Counting the number of books in the database.");
         lock (_lockDatabase)
         {
             int count = books.Count;
-            Program.logger.LogDebug($"Counting records: {count} books found.");
             return count;
         }
     }

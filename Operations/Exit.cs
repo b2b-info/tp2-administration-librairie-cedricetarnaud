@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 internal class Exit : Operations
 {
-    public override void PerformAction()
+    public override void ExecuteState()
     {
-        Environment.Exit(0);
+        if (operationsStates == OperationsStates.Waiting)
+        {
+            //manque de quoi attention
+            Environment.Exit(0);
+
+        }
     }
 
-    public override void Product()
-    {
-        throw new NotImplementedException();
-    }
+
 }
 

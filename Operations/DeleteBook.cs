@@ -1,4 +1,4 @@
-﻿namespace BookStore;
+﻿    namespace BookStore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,21 @@ public class DeleteBook : Operations
 {
     private string _deletionInformation = "default";
 
-    public override void PerformAction()
+    public override void ExecuteState()
+    {
+        switch (operationsStates)
+        {
+            case OperationsStates.Waiting:
+                ExecuteWaitingState();
+            break;
+            case OperationsStates.Queued:
+                ExecuteQueuedState();
+            break;
+        }
+      
+    }
+    
+    private async void ExecuteWaitingState()
     {
         Console.WriteLine("1. Delete book by Id");
         Console.WriteLine("2. Delete book by Title");
@@ -19,33 +33,27 @@ public class DeleteBook : Operations
         int choice = ToolBox.ReadInt("Enter operation : ");
         if (choice == 1)
         {
-            SetDeleteInfo("Id");
+            _deletionInformation =  ToolBox.ReadUInt("Id : ").ToString();
+            await Program.Produce(this);
+            operationsStates = OperationsStates.Queued;
         }
         else if (choice == 2)
         {
-            SetDeleteInfo("Title");
+            await Program.Produce(this);
+            operationsStates = OperationsStates.Queued;
+
         }
-        else
+        else if(choice == 3)
         {
             //We gtfo mate
         }
+        else
+        {
+            //C pas fcking bon man
+        }
+
     }
-    
-    private void SetDeleteInfo(string DemandedDelete)
-    {
-        _deletionInformation = ToolBox.ReadNonEmpty($"{DemandedDelete} : ");
-
-        //int removedBooks = Database.GetAllBooks().RemoveAll(book => book.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase));
-
-        //if (removedBooks == 0)
-        //{
-        //    Console.WriteLine("No book found with that Title");
-        //    return;
-        //}
-
-        //Console.WriteLine($"{removedBooks}books removed from the library");
-    }
-    public override void Product()
+    private  void ExecuteQueuedState()
     {
         if (uint.TryParse(_deletionInformation, out uint result))
         {

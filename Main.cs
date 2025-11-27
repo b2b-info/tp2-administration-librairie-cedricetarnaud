@@ -1,6 +1,8 @@
 ﻿namespace BookStore;
 
 using System;
+using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -13,10 +15,10 @@ class Program
         })
         .CreateLogger<Program>();
     private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
-    public static readonly Queue<TaskInstruction> TasksQueue = new ();
+    public static readonly Channel<Operations> TasksQueue = Channel.CreateUnbounded<Operations>();
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
-
+    
     static async Task Main(string[] args)
     {
         logger.LogInformation("Application started.");
@@ -25,11 +27,12 @@ class Program
         logger.LogInformation("Database seed with demo data.");
 
         RunLoginLoop();
-
-        await RunMenuLoop();
+        using var cancellationToken = new CancellationTokenSource();
+        var worker = Task.Run(() => Consume(cancellationToken.Token));
+        RunMenuLoop();
     }
 
-    private static void RunLoginLoop()
+    private async static void RunLoginLoop()
     {
         uint count = 0;
         Console.WriteLine("Please Login");
@@ -65,15 +68,14 @@ class Program
             }
         }
         logger.LogInformation("Starting main menu loop.");
-        await RunMenuLoop();
     }
-    private static async Task RunMenuLoop()
+    private static void RunMenuLoop()
     {
         while (true)
         {
             ShowMainMenu();
             uint operation = ToolBox.ReadUInt("Enter your operation: ");
-            PossibleOperations[operation]?.PerformAction();
+            PossibleOperations[operation]?.ExecuteState();
             Console.WriteLine();
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();
@@ -83,7 +85,6 @@ class Program
 
     private static void ShowMainMenu()
     {
-        logger.LogInformation("Displaying main menu.");
 
         Console.WriteLine("====================================");
         Console.WriteLine("1. Add Book");
@@ -95,6 +96,20 @@ class Program
         Console.WriteLine("====================================");
     }
 
+    public static ValueTask Produce(Operations operation) 
+    {
+          return TasksQueue.Writer.WriteAsync(operation);
+    }
+    static async Task Consume(CancellationToken cancellationToken)
+    {
+        Console.WriteLine("allo");
+        await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
+        {
+            logger.LogInformation("Treating queries");
+            operation.ExecuteState();
+            await Task.Delay(100, cancellationToken);
+        }
+    }
     public static void IncrementId()
     {
         lock (_lockIdTasks)

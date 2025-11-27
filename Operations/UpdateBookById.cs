@@ -15,7 +15,35 @@ using System.Threading.Tasks;
     private int _updatedQuantity = 0;
     private double _updatedPrice = 0;
 
-    public override void PerformAction()
+    public override void ExecuteState()
+    {
+        switch(operationsStates)
+        {
+            case OperationsStates.Waiting: 
+                ExecuteWaitingState();
+            break;
+            
+            case OperationsStates.Queued:
+                ExecuteQueuedState(); 
+            break;
+
+        }
+    } 
+     
+        
+    private void ExecuteQueuedState()
+    {
+        if (Database.UpdateBook(new Book(_updatedBookId, _updatedTitle, _updatedAuthor, _updatedPrice, _updatedQuantity)))
+        {
+            Console.WriteLine("Book updated");
+        }
+        else
+        {
+            Console.WriteLine("Book could not be updated");
+        }
+    }
+    
+    private async void ExecuteWaitingState()
     {
         _updatedBookId = ToolBox.ReadUInt("Id: ");
         var book = Database.GetBookById(_updatedBookId);
@@ -45,18 +73,11 @@ using System.Threading.Tasks;
         string newQuantity = ToolBox.ReadOptional("New Quantity: ");
 
         AssignEntries(newTitle, newAuthor, newPrice, newQuantity);
+
+        await Program.Produce(this);
+        operationsStates = OperationsStates.Queued;
     }
 
-    public override void Product () {
-        if (Database.UpdateBook(new Book(_updatedBookId, _updatedTitle, _updatedAuthor,_updatedPrice,_updatedQuantity)))
-        {
-            Console.WriteLine("Book updated");
-        }
-        else
-        {
-            Console.WriteLine("Book could not be updated");
-        }
-    }
 
     private void AssignEntries(string newTitle,string newAuthor,string newPrice, string newQuantity)
     {
