@@ -6,8 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-    public interface IOperations
+    public abstract class Operations
     {
-        public void PerformAction();
+        public abstract int Id { get; set; }
+        public abstract void PerformAction();
+        public  abstract void Product();
     }
 

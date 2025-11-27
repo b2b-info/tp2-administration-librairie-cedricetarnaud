@@ -2,14 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
 
-    internal class UpdateBookById : IOperations
+    internal class UpdateBookById : Operations
     {
-      
-    public void PerformAction()
+
+    private Book _updateBook;
+
+    public override int Id { get; set; }
+
+
+    public override void PerformAction()
     {
         uint id = ToolBox.ReadUInt("Id: ");
         var book = Database.GetBookById(id);
@@ -40,9 +46,14 @@ using System.Threading.Tasks;
 
         AssignEntries(newTitle, newAuthor, newPrice, newQuantity, ref finalTitle, ref finalAuthor, ref finalPrice, ref finalQuantity);
 
-        Book updated = new (id, finalTitle, finalAuthor, finalPrice, finalQuantity);
+        Book _updateBook = new (id, finalTitle, finalAuthor, finalPrice, finalQuantity);
 
-        if (Database.UpdateBook(updated))
+        Program.IncrementId();
+        
+    }
+
+    public override void Product () {
+        if (Database.UpdateBook(_updateBook))
         {
             Console.WriteLine("Book updated");
         }
@@ -51,6 +62,7 @@ using System.Threading.Tasks;
             Console.WriteLine("Book could not be updated");
         }
     }
+
     private void AssignEntries(string newTitle,string newAuthor,string newPrice, string newQuantity,ref string finalTitle, ref string finalAuthor, ref double finalPrice, ref int finalQuantity)
     {
         if(string.IsNullOrEmpty(newTitle)) finalTitle = newTitle;
@@ -68,6 +80,11 @@ using System.Threading.Tasks;
             finalQuantity = parsedQty;
         }
     }
+    private void blabla()
+    {
+     
+    }
+    
 }
 
    

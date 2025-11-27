@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 
 class Program
 {
-    private static readonly Dictionary<uint, IOperations> PossibleOperations = new Dictionary<uint, IOperations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
+    private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
+    public static readonly Queue<TaskInstruction> TasksQueue = new ();
+    public static int IdTasks = 0;
+    private static readonly object _lockIdTasks = new();
 
     static async Task Main(string[] args)
     {
@@ -74,5 +77,11 @@ class Program
         Console.WriteLine("====================================");
     }
 
-   
+    public static void IncrementId()
+    {
+        lock (_lockIdTasks)
+        {
+            IdTasks++;
+        }
+    }
 }
