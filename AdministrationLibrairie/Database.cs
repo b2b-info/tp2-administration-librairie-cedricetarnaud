@@ -1,14 +1,18 @@
+using System.Security.Cryptography.X509Certificates;
+
 namespace BookStore;
 
 using Microsoft.Extensions.Logging;
 
-public static class Database
+
+public class Database
 {
+
     private static readonly List<Book> books = new();
     private static readonly object _lockDatabase = new();
-
     private static uint nextId = 1;
 
+  
     public static int CountRecords()
     {
         Program.logger.LogInformation($"Counting the number of books in the database.");
@@ -78,7 +82,7 @@ public static class Database
     {
         Program.logger.LogInformation($"Adding book with ID: {book.Id} started.");
         await Task.Delay(500);
-
+      
         lock (_lockDatabase)
         {
             books.Add(book);
