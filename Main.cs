@@ -105,7 +105,6 @@ class Program
         Console.WriteLine("allo");
         await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
         {
-            logger.LogInformation("Treating queries");
             operation.ExecuteState();
             await Task.Delay(100, cancellationToken);
         }
