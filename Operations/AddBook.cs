@@ -1,6 +1,8 @@
 ﻿using BookStore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -38,8 +40,12 @@ public class AddBook : Operations
     }
     private async void ExecuteQueuedState()
     {
+        Program.logger.LogInformation("Adding book...");
+        Stopwatch stopwatch = Stopwatch.StartNew();
         Book book = new(_id, _title, _author, _price, _quantity);
         await Database.AddBook(book);
+        stopwatch.Stop();
+        Program.logger.LogInformation($"Book added in {stopwatch.ElapsedMilliseconds} milliseconds");
     }
 }
 
