@@ -1,6 +1,9 @@
 ﻿    namespace BookStore;
+
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,6 +58,8 @@ public class DeleteBook : Operations
     }
     private  void ExecuteQueuedState()
     {
+        Program.logger.LogInformation("Deleting book...");
+        Stopwatch stopwatch = Stopwatch.StartNew();
         if (uint.TryParse(_deletionInformation, out uint result))
         {
             Book? book = Database.GetBookById(result);
@@ -64,7 +69,6 @@ public class DeleteBook : Operations
                 return;
             }
             Database.RemoveBook(book.Id);
-            Console.WriteLine($"Book {book.Title} deleted");
         }
         else
         {
@@ -76,6 +80,8 @@ public class DeleteBook : Operations
             }
             Console.WriteLine($"{removedBooks}books removed from the library");
         }
+        stopwatch.Stop();
+        Program.logger.LogInformation($"Book deleted in {stopwatch.ElapsedMilliseconds} milliseconds");
     }
    
 }
