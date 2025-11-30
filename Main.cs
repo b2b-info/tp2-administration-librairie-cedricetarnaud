@@ -1,6 +1,9 @@
 ﻿namespace BookStore;
 
 using System;
+
+using System.Diagnostics;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -17,16 +20,22 @@ class Program
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
 
+    public static bool IsRunning { get; set; } = true;
+    public static CancellationTokenSource CancellationTokenSourceMain { get; set; }
     static async Task Main(string[] args)
     {
+        Stopwatch stopwatch = Stopwatch.StartNew();
         logger.LogInformation("Application started.");
-
         Database.SeedDemoData();
         logger.LogInformation("Database seed with demo data.");
-
         RunLoginLoop();
-
-        await RunMenuLoop();
+        CancellationTokenSourceMain = new CancellationTokenSource();
+        var worker = Task.Run(() => Consume(CancellationTokenSourceMain.Token));
+        RunMenuLoop();
+        logger.LogInformation("Application exiting");
+        await worker;
+        stopwatch.Stop();
+        logger.LogInformation($"Running for {stopwatch.ElapsedMilliseconds} milliseconds");
     }
 
     private static void RunLoginLoop()
@@ -69,7 +78,7 @@ class Program
     }
     private static async Task RunMenuLoop()
     {
-        while (true)
+        while (IsRunning)
         {
             ShowMainMenu();
             uint operation = ToolBox.ReadUInt("Enter your operation: ");
@@ -95,6 +104,20 @@ class Program
         Console.WriteLine("====================================");
     }
 
+
+    public static ValueTask Produce(Operations operation,string actionQueud) 
+    {
+        logger.LogInformation(actionQueud);
+        return TasksQueue.Writer.WriteAsync(operation);
+    }
+    static async Task Consume(CancellationToken cancellationToken)
+    {
+        await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
+        {
+            operation.ExecuteState();
+            await Task.Delay(100, cancellationToken);
+        }
+    }
     public static void IncrementId()
     {
         lock (_lockIdTasks)

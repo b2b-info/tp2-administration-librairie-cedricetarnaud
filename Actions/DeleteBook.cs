@@ -1,47 +1,91 @@
-﻿namespace BookStore;
+﻿    namespace BookStore;
+
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Reflection.Metadata.BlobBuilder;
 
 
-public class DeleteBook : IOperations
+public class DeleteBook : Operations
 {
-    private readonly Dictionary<int,Action> choices = new Dictionary<int, Action> { { 1, DeleteBookById},{2,DeleteBookByTitle} };
-    public void PerformAction()
+    private string _deletionInformation = "default";
+
+    public override void ExecuteState()
     {
-        Console.WriteLine("1. Delete book by Id");
-        Console.WriteLine("2. Delete book by Title");
-        Console.WriteLine("3. Back to Main Menu");
-        int choice = ToolBox.ReadInt("Enter operation : ");
-        choices[choice].Invoke();
+        switch (operationsStates)
+        {
+            case OperationsStates.Waiting:
+                ExecuteWaitingState();
+            break;
+            case OperationsStates.Queued:
+                ExecuteQueuedState();
+            break;
+        }
+      
     }
-    private static readonly Action DeleteBookByTitle = () => 
+    
+    private async void ExecuteWaitingState()
     {
-        string title = ToolBox.ReadNonEmpty("Title: ");
-
-        int removedBooks = Database.GetAllBooks().RemoveAll(book => book.Title.Equals(title, StringComparison.CurrentCultureIgnoreCase));
-
-        if (removedBooks == 0)
+       
+        bool choiceIsValid = true;
+        while (!choiceIsValid)
         {
-            Console.WriteLine("No book found with that Title");
-            return;
-        }
+            Console.WriteLine("1. Delete book by Id");
+            Console.WriteLine("2. Delete book by Title");
+            Console.WriteLine("3. Back to Main Menu");
+            int choice = ToolBox.ReadInt("Enter operation : ");
+            if (choice == 1)
+            {
+                _deletionInformation = ToolBox.ReadUInt("Id : ").ToString();
+                await Program.Produce(this, "Delete book by id in queue");
+                operationsStates = OperationsStates.Queued;
+            }
+            else if (choice == 2)
+            {
+                await Program.Produce(this, "Delete book by title in queue");
+                operationsStates = OperationsStates.Queued;
 
-        Console.WriteLine($"{removedBooks}books removed from the library");
-    };
-    private static readonly Action DeleteBookById = () => 
+            }
+            else if (choice > 3)
+            {
+                Console.WriteLine("Please pick a valid option");
+                choiceIsValid = false;
+            }
+            
+        }
+       
+
+    }
+
+    private  void ExecuteQueuedState()
     {
-        uint id = ToolBox.ReadUInt("Id: ");
-        Book? book =  Database.GetBookById(id);
-        if (book == null)
+        Program.logger.LogInformation("Deleting book...");
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        if (uint.TryParse(_deletionInformation, out uint result))
         {
-            Console.WriteLine("No book found with that id");
-            return;
+            Book? book = Database.GetBookById(result);
+            if (book == null)
+            {
+                Console.WriteLine("No book found with that id");
+                return;
+            }
+            Database.RemoveBook(book.Id);
         }
-        Database.RemoveBook(book.Id);
-        Console.WriteLine($"Book {book.Title} deleted");
-    };
+        else
+        {
+            int removedBooks = Database.GetAllBooks().RemoveAll(book => book.Title.Equals(_deletionInformation, StringComparison.CurrentCultureIgnoreCase));
+            if (removedBooks == 0)
+            {
+                Console.WriteLine("No book found with that Title");
+                return;
+            }
+            Console.WriteLine($"{removedBooks}books removed from the library");
+        }
+        stopwatch.Stop();
+        Program.logger.LogInformation($"Book deleted in {stopwatch.ElapsedMilliseconds} milliseconds");
+    }
 }

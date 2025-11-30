@@ -5,11 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-internal class Exit : IOperations
+internal class Exit : Operations
 {
-    public void PerformAction()
+    public override void ExecuteState()
     {
-        Environment.Exit(0);
+        if (operationsStates == OperationsStates.Waiting)
+        {
+            Program.IsRunning = false;
+            Program.CancellationTokenSourceMain.Cancel();
+        }
     }
+
+
 }
 
