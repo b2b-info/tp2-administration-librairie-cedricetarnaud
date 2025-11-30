@@ -30,29 +30,31 @@ public class DeleteBook : Operations
     
     private async void ExecuteWaitingState()
     {
-        Console.WriteLine("1. Delete book by Id");
-        Console.WriteLine("2. Delete book by Title");
-        Console.WriteLine("3. Back to Main Menu");
-        int choice = ToolBox.ReadInt("Enter operation : ");
-        if (choice == 1)
+        bool choiceIsValid = true;
+        while (!choiceIsValid)
         {
-            _deletionInformation =  ToolBox.ReadUInt("Id : ").ToString();
-            await Program.Produce(this);
-            operationsStates = OperationsStates.Queued;
-        }
-        else if (choice == 2)
-        {
-            await Program.Produce(this);
-            operationsStates = OperationsStates.Queued;
+            Console.WriteLine("1. Delete book by Id");
+            Console.WriteLine("2. Delete book by Title");
+            Console.WriteLine("3. Back to Main Menu");
+            int choice = ToolBox.ReadInt("Enter operation : ");
+            if (choice == 1)
+            {
+                _deletionInformation = ToolBox.ReadUInt("Id : ").ToString();
+                await Program.Produce(this, "Delete book by id in queue");
+                operationsStates = OperationsStates.Queued;
+            }
+            else if (choice == 2)
+            {
+                await Program.Produce(this, "Delete book by title in queue");
+                operationsStates = OperationsStates.Queued;
 
-        }
-        else if(choice == 3)
-        {
-            //We gtfo mate
-        }
-        else
-        {
-            //C pas fcking bon man
+            }
+            else if (choice > 3)
+            {
+                Console.WriteLine("Please pick a valid option");
+                choiceIsValid = false;
+            }
+
         }
 
     }
