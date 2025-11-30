@@ -96,9 +96,10 @@ class Program
         Console.WriteLine("====================================");
     }
 
-    public static ValueTask Produce(Operations operation) 
+    public static ValueTask Produce(Operations operation, string actionQueud)
     {
-          return TasksQueue.Writer.WriteAsync(operation);
+        logger.LogInformation(actionQueud);
+        return TasksQueue.Writer.WriteAsync(operation);
     }
     static async Task Consume(CancellationToken cancellationToken)
     {
