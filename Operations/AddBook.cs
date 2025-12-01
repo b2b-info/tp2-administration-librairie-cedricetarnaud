@@ -35,7 +35,7 @@ public class AddBook : Operations
         _price = ToolBox.ReadDoublePositive("Book price : ");
         _quantity = ToolBox.ReadIntPositive("Book quantity : ");
 
-        await Program.Produce(this);
+        await Program.Produce(this, "Adding book in queue");
         operationsStates = OperationsStates.Queued;
     }
     private async void ExecuteQueuedState()
