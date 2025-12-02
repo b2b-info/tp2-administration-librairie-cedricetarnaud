@@ -1,6 +1,8 @@
 ﻿namespace BookStore;
 
 using System;
+using System.Runtime.InteropServices.Marshalling;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
@@ -13,23 +15,26 @@ class Program
         })
         .CreateLogger<Program>();
     private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
-    public static readonly Queue<TaskInstruction> TasksQueue = new ();
+    public static readonly Channel<Operations> TasksQueue = Channel.CreateUnbounded<Operations>();
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
-
+    public static bool IsRunning = true;
+    public static CancellationTokenSource CancellationToken;
     static async Task Main(string[] args)
     {
+        CancellationToken = new CancellationTokenSource();
         logger.LogInformation("Application started.");
 
         Database.SeedDemoData();
         logger.LogInformation("Database seed with demo data.");
 
         RunLoginLoop();
-
-        await RunMenuLoop();
+        var worker = Task.Run(() => Consume(CancellationToken.Token));
+        RunMenuLoop();
+        await worker;
     }
 
-    private static void RunLoginLoop()
+    private async static void RunLoginLoop()
     {
         uint count = 0;
         Console.WriteLine("Please Login");
@@ -65,25 +70,22 @@ class Program
             }
         }
         logger.LogInformation("Starting main menu loop.");
-        await RunMenuLoop();
     }
-    private static async Task RunMenuLoop()
+    private static void RunMenuLoop()
     {
-        while (true)
+        while (IsRunning)
         {
             ShowMainMenu();
             uint operation = ToolBox.ReadUInt("Enter your operation: ");
-            PossibleOperations[operation]?.PerformAction();
+            PossibleOperations[operation]?.ExecuteState();
             Console.WriteLine();
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();
         }
-        logger.LogInformation("Application exiting");
     }
 
     private static void ShowMainMenu()
     {
-        logger.LogInformation("Displaying main menu.");
 
         Console.WriteLine("====================================");
         Console.WriteLine("1. Add Book");
@@ -95,6 +97,19 @@ class Program
         Console.WriteLine("====================================");
     }
 
+    public static ValueTask Produce(Operations operation, string actionQueud)
+    {
+        logger.LogInformation(actionQueud);
+        return TasksQueue.Writer.WriteAsync(operation);
+    }
+    static async Task Consume(CancellationToken cancellationToken)
+    {
+        await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
+        {
+            operation.ExecuteState();
+            await Task.Delay(100, cancellationToken);
+        }
+    }
     public static void IncrementId()
     {
         lock (_lockIdTasks)
