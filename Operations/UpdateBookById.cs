@@ -1,6 +1,8 @@
 ﻿using BookStore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
@@ -33,6 +35,8 @@ using System.Threading.Tasks;
         
     private void ExecuteQueuedState()
     {
+        Program.logger.LogInformation("Adding book...");
+        Stopwatch stopwatch = Stopwatch.StartNew();
         if (Database.UpdateBook(new Book(_updatedBookId, _updatedTitle, _updatedAuthor, _updatedPrice, _updatedQuantity)))
         {
             Console.WriteLine("Book updated");
@@ -41,6 +45,8 @@ using System.Threading.Tasks;
         {
             Console.WriteLine("Book could not be updated");
         }
+        stopwatch.Stop();
+        Program.logger.LogInformation($"Task executed in {stopwatch.ElapsedMilliseconds} milliseconds");
     }
     
     private async void ExecuteWaitingState()
@@ -74,7 +80,7 @@ using System.Threading.Tasks;
 
         AssignEntries(newTitle, newAuthor, newPrice, newQuantity);
 
-        await Program.Produce(this);
+        await Program.Produce(this,"Adding book in queue");
         operationsStates = OperationsStates.Queued;
     }
 

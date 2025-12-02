@@ -11,9 +11,7 @@ internal class Exit : Operations
     {
         if (operationsStates == OperationsStates.Waiting)
         {
-            //manque de quoi attention
-            Environment.Exit(0);
-
+            Program.IsRunning = false;
         }
     }
 

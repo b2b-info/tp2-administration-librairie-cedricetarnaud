@@ -31,7 +31,7 @@ public class DeleteBook : Operations
     private async void ExecuteWaitingState()
     {
         bool choiceIsValid = true;
-        while (!choiceIsValid)
+        do
         {
             Console.WriteLine("1. Delete book by Id");
             Console.WriteLine("2. Delete book by Title");
@@ -55,7 +55,7 @@ public class DeleteBook : Operations
                 choiceIsValid = false;
             }
 
-        }
+        } while (!choiceIsValid);
 
     }
     private  void ExecuteQueuedState()

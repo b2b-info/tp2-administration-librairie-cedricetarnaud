@@ -1,4 +1,5 @@
 ﻿using BookStore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ public class BookInformations : Operations
     };
     private static readonly Action BackToMainMenu = () => 
     {
-
+        Program.logger.LogInformation("Going back to main menu");
     };
 }
 

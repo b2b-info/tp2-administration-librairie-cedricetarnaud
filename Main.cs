@@ -18,6 +18,7 @@ class Program
     public static readonly Channel<Operations> TasksQueue = Channel.CreateUnbounded<Operations>();
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
+    public static bool IsRunning = true;
     
     static async Task Main(string[] args)
     {
@@ -30,6 +31,7 @@ class Program
         using var cancellationToken = new CancellationTokenSource();
         var worker = Task.Run(() => Consume(cancellationToken.Token));
         RunMenuLoop();
+        await worker;
     }
 
     private async static void RunLoginLoop()
@@ -71,7 +73,7 @@ class Program
     }
     private static void RunMenuLoop()
     {
-        while (true)
+        while (IsRunning)
         {
             ShowMainMenu();
             uint operation = ToolBox.ReadUInt("Enter your operation: ");
@@ -80,7 +82,6 @@ class Program
             Console.WriteLine("Press Enter to continue...");
             Console.ReadLine();
         }
-        logger.LogInformation("Application exiting");
     }
 
     private static void ShowMainMenu()
