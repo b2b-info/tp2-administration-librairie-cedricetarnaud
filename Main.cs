@@ -19,17 +19,17 @@ class Program
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
     public static bool IsRunning = true;
-    
+    public static CancellationTokenSource CancellationToken;
     static async Task Main(string[] args)
     {
+        CancellationToken = new CancellationTokenSource();
         logger.LogInformation("Application started.");
 
         Database.SeedDemoData();
         logger.LogInformation("Database seed with demo data.");
 
         RunLoginLoop();
-        using var cancellationToken = new CancellationTokenSource();
-        var worker = Task.Run(() => Consume(cancellationToken.Token));
+        var worker = Task.Run(() => Consume(CancellationToken.Token));
         RunMenuLoop();
         await worker;
     }
@@ -104,7 +104,6 @@ class Program
     }
     static async Task Consume(CancellationToken cancellationToken)
     {
-        Console.WriteLine("allo");
         await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
         {
             operation.ExecuteState();

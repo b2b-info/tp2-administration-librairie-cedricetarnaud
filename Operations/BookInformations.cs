@@ -49,7 +49,7 @@ public class BookInformations : Operations
     };
     private  static readonly Action ShowBookCount = () => 
     {
-        Console.WriteLine($"Total books : {Database.CountRecords()}");
+        Console.WriteLine($"Total _books : {Database.CountRecords()}");
     };
     private  static readonly Action ShowAllBooks = () => 
     {

@@ -12,6 +12,7 @@ internal class Exit : Operations
         if (operationsStates == OperationsStates.Waiting)
         {
             Program.IsRunning = false;
+            Program.CancellationToken.Cancel();
         }
     }
 

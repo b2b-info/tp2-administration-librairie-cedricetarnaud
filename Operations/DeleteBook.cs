@@ -80,7 +80,7 @@ public class DeleteBook : Operations
                 Console.WriteLine("No book found with that Title");
                 return;
             }
-            Console.WriteLine($"{removedBooks}books removed from the library");
+            Console.WriteLine($"{removedBooks}_books removed from the library");
         }
         stopwatch.Stop();
         Program.logger.LogInformation($"Book deleted in {stopwatch.ElapsedMilliseconds} milliseconds");
