@@ -12,13 +12,39 @@
 - **Ajout d’un mécanisme de timeout sur l’état "En Exécution".**
   - *Justification :* éviter le blocage permanent si aucune réponse n’était reçue du système supervisé.
 
-### 🧩 1.2 Améliorations structurelles
-- **Séparation du cœur de la machine à états et de la couche d’E/S.**
-  - *Justification :* meilleure testabilité, modularité et maintenance future.
-  
-- **Introduction de tests unitaires pour chaque transition critique.**
-  - *Justification :* réduire les régressions et garantir la fiabilité en production.
-
+### 🧩 1.2 Implémentation de machine à état
+- **Switch enum**
+- - *Example : * 
+  ```c#
+      public override void ExecuteState()
+    {
+        switch (operationsStates)
+        {
+            case OperationsStates.Waiting:
+                ExecuteWaitingState();
+            break;
+            case OperationsStates.Queued:
+                ExecuteQueuedState();
+            break;
+        }
+      
+    }
+  ```
+- **Table de transition**
+- *Example : *
+  ```c#
+      private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
+  ```
+- **State Pattern**
+- *Example : *
+  ```c#
+  PossibleOperations[operation]?.ExecuteState();
+   public abstract class Operations
+    {
+        protected OperationsStates operationsStates;
+        public abstract void ExecuteState();
+    }
+  ```
 
 ## 2. Diagramme de la machine à états
 
