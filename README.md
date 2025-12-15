@@ -58,9 +58,11 @@
 
 ```mermaid
 stateDiagram-v2
-    [*] --> En_Attente
+    [*] --> Waiting
 
-    En_Attente --> En_Execution : ordre_de_maintenance
+    En_Attente --> Queued : add_to_queue
+    En_Attente --> Queued : add_to_queue
+
 ```
 
 ## 3. Sections critiques identifiées
