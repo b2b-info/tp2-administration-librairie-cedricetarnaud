@@ -14,7 +14,7 @@
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
-- - *Example : * 
+- *Example : * 
   ```c#
       public override void ExecuteState()
     {
@@ -30,6 +30,8 @@
       
     }
   ```
+  - *Justification : * Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
+
 - **Table de transition**
 - *Example : *
   ```c#
