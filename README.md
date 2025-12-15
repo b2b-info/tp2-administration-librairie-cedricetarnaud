@@ -37,6 +37,7 @@
   ```c#
       private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
   ```
+- *Explication : Les operations possible sont toutes dans le memes dictionnary*
 - **State Pattern**
 - *Example : *
   ```c#
@@ -46,8 +47,13 @@
         protected OperationsStates operationsStates;
         public abstract void ExecuteState();
     }
+    await foreach (var operation in TasksQueue.Reader.ReadAllAsync(cancellationToken))
+    {
+        operation.ExecuteState();
+        await Task.Delay(100, cancellationToken);
+    }
   ```
-
+- *Explication : Le code éxecute l'interface operation qui a une methode executeState qui en fonction du state va éxecuter une action différente *
 ## 2. Diagramme de la machine à états
 
 ```mermaid
