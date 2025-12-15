@@ -36,7 +36,15 @@ stateDiagram-v2
     En_Échec --> En_Attente : reset
 ```
 
-## 3. Auteurs
+## 3. Sections critiques identifiées
+- **Fonctions dans la class Database**
+  - *Justification :* Toutes les fonctions qui ajoutent, modifient ou suppriment des livres constituent des sections critiques, car elles accèdent à des ressources partagées par l'essemble du programme.
+
+ - **Fonctions dans la class Login**
+  - *Justification :* Toutes les fonctions gérant la connexion ou la modification des informations d'utilisateur sont des sections critiques, car elles accèdent à des ressources partagée par plusieurs parties du code. 
+
+
+## 4. Auteurs
 
 - **Arnaud Simard-Desmeules** – Développeur   
 - **Cedryk Leblanc** – Développeur 
