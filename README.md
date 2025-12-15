@@ -65,10 +65,56 @@ stateDiagram-v2
 ## 3. Sections critiques identifiées
 - **Fonctions dans la class Database**
   - *Justification :* Toutes les fonctions qui ajoutent, modifient ou suppriment des livres constituent des sections critiques, car elles accèdent à des ressources partagées par l'essemble du programme.
+  - *Example :*
+    ```c#
+    public static bool CheckPkExists(uint pk)
+    {
+        Program.logger.LogInformation($"Checking if {pk} exist in the database.");
+        lock (_lockDatabase)
+        {
+            bool exists = _books.Any(book => book.Id == pk);
+
+            if (exists)
+            {
+                Program.logger.LogInformation($"Primary key {pk} found in the database.");
+            }
+            else
+            {
+                Program.logger.LogWarning($"Primary key {pk} does not exist in the database.");
+            }
+
+            return exists;
+        }
+    }
+    ```
 
  - **Fonctions dans la class Login**
   - *Justification :* Toutes les fonctions gérant la connexion ou la modification des informations d'utilisateur sont des sections critiques, car elles accèdent à des ressources partagée par plusieurs parties du code. 
+ - *Example :*
+    ```c#
+    public static bool IsLoggedIn()
+    {
+        Program.logger.LogDebug("Checking login attempt.");
+        lock (_lockLogin)
+        {
+            bool success = _users.Any(user =>
+                string.Equals(user.UserName, userName, StringComparison.OrdinalIgnoreCase)
+                && user.Password == passWord
+            );
 
+            if (success)
+            {
+                Program.logger.LogInformation($"Login successful for user: {userName}");
+            }
+            else
+            {
+                Program.logger.LogWarning($"Login failed for user: {userName}");
+            }
+
+            return success;
+        }
+    }
+    ```
 
 ## 4. Auteurs
 
