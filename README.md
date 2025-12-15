@@ -60,6 +60,7 @@
 stateDiagram-v2
     [*] --> Waiting
     Waiting --> Queued : add_to_queue
+    Queued --> [*]
 ```
 
 ## 3. Sections critiques identifiées
