@@ -30,9 +30,8 @@ public class DeleteBook : Operations
     
     private async void ExecuteWaitingState()
     {
-       
         bool choiceIsValid = true;
-        while (!choiceIsValid)
+        do
         {
             Console.WriteLine("1. Delete book by Id");
             Console.WriteLine("2. Delete book by Title");
@@ -55,12 +54,10 @@ public class DeleteBook : Operations
                 Console.WriteLine("Please pick a valid option");
                 choiceIsValid = false;
             }
-            
-        }
-       
+
+        } while (!choiceIsValid);
 
     }
-
     private  void ExecuteQueuedState()
     {
         Program.logger.LogInformation("Deleting book...");
@@ -83,9 +80,10 @@ public class DeleteBook : Operations
                 Console.WriteLine("No book found with that Title");
                 return;
             }
-            Console.WriteLine($"{removedBooks}books removed from the library");
+            Console.WriteLine($"{removedBooks}_books removed from the library");
         }
         stopwatch.Stop();
         Program.logger.LogInformation($"Book deleted in {stopwatch.ElapsedMilliseconds} milliseconds");
     }
+   
 }

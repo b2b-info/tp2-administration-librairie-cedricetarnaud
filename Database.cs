@@ -8,18 +8,16 @@ using Microsoft.Extensions.Logging;
 public class Database
 {
 
-    private static readonly List<Book> books = new();
+    private static readonly List<Book> _books = new();
     private static readonly object _lockDatabase = new();
-    private static uint nextId = 1;
+    private static uint _nextId = 1;
 
   
     public static int CountRecords()
     {
-        Program.logger.LogInformation($"Counting the number of books in the database.");
         lock (_lockDatabase)
         {
-            int count = books.Count;
-            Program.logger.LogDebug($"Counting records: {count} books found.");
+            int count = _books.Count;
             return count;
         }
     }
@@ -29,7 +27,7 @@ public class Database
         Program.logger.LogInformation($"Checking if {pk} exist in the database.");
         lock (_lockDatabase)
         {
-            bool exists = books.Any(book => book.Id == pk);
+            bool exists = _books.Any(book => book.Id == pk);
 
             if (exists)
             {
@@ -46,13 +44,13 @@ public class Database
 
     public static List<Book> GetAllBooks()
     {
-        Program.logger.LogInformation($"Retrieving all books from the database.");
+        Program.logger.LogInformation($"Retrieving all _books from the database.");
         lock (_lockDatabase)
         {
-            var listBooks = books.ToList();
+            var listBooks = _books.ToList();
             int count = listBooks.Count;
 
-            Program.logger.LogDebug($"Retrieving {count} books from the database.");
+            Program.logger.LogDebug($"Retrieving {count} _books from the database.");
 
             return listBooks;
         }
@@ -63,7 +61,7 @@ public class Database
         Program.logger.LogInformation($"Looking up for the book with ID: {id}.");
         lock (_lockDatabase)
         {
-            var book = books.FirstOrDefault(book => book.Id == id);
+            var book = _books.FirstOrDefault(book => book.Id == id);
 
             if(book != null)
             {
@@ -85,7 +83,7 @@ public class Database
       
         lock (_lockDatabase)
         {
-            books.Add(book);
+            _books.Add(book);
         }
 
         Program.logger.LogInformation($"Book successfully added with ID: {book.Id} and Title: {book.Title}.");
@@ -97,7 +95,7 @@ public class Database
 
         lock (_lockDatabase)
         {
-            var index = books.FindIndex(book => book.Id == updated.Id);
+            var index = _books.FindIndex(book => book.Id == updated.Id);
             if (index == -1)
             {
                 Program.logger.LogWarning($"Updating failed. Book with ID: {updated.Id} was not found.");
@@ -105,7 +103,7 @@ public class Database
             }
                 
 
-            books[index] = updated;
+            _books[index] = updated;
 
             Program.logger.LogInformation($"Book successfully updated with ID: {updated.Id} and Title: {updated.Title}");
             return true;
@@ -117,7 +115,7 @@ public class Database
         Program.logger.LogInformation($"Removing book with ID: {id}.");
         lock (_lockDatabase)
         {
-            var book = books.FirstOrDefault(book => book.Id == id);
+            var book = _books.FirstOrDefault(book => book.Id == id);
             if (book == null)
             {
                 Program.logger.LogWarning($"Removing failed. Book with ID: {id} was not found.");
@@ -125,7 +123,7 @@ public class Database
             }
                 
 
-            books.Remove(book);
+            _books.Remove(book);
 
             Program.logger.LogInformation($"Book successfully removed with ID: {id}");
             return true;
@@ -136,59 +134,59 @@ public class Database
     {
         lock (_lockDatabase)
         {
-            if (books.Count > 0)
+            if (_books.Count > 0)
             {
-                Program.logger.LogDebug("SeedDemoData skipped. Database already contains books.");
+                Program.logger.LogDebug("SeedDemoData skipped. Database already contains _books.");
                 return;
             }
                 
 
-            books.Add(
+            _books.Add(
                 new Book(
-                    id: nextId++,
+                    id: _nextId++,
                     title: "The Pragmatic Programmer",
                     author: "Andrew Hunt, David Thomas",
                     price: 49.99,
                     quantity: 10
                 )
             );
-            books.Add(
+            _books.Add(
                 new Book(
-                    id: nextId++,
+                    id: _nextId++,
                     title: "Clean Code",
                     author: "Robert C. Martin",
                     price: 39.99,
                     quantity: 5
                 )
             );
-            books.Add(
+            _books.Add(
                 new Book(
-                    id: nextId++,
+                    id: _nextId++,
                     title: "Design Patterns: Elements of Reusable Object-Oriented Software",
                     author: "Erich Gamma",
                     price: 54.99,
                     quantity: 7
                 )
             );
-            books.Add(
+            _books.Add(
                 new Book(
-                    id: nextId++,
+                    id: _nextId++,
                     title: "Refactoring: Improving the Design of Existing Code",
                     author: "Martin Fowler",
                     price: 47.50,
                     quantity: 4
                 )
             );
-            books.Add(
+            _books.Add(
                 new Book(
-                    id: nextId++,
+                    id: _nextId++,
                     title: "Head First Design Patterns",
                     author: "Eric Freeman",
                     price: 44.99,
                     quantity: 12
                 )
             );
-            Program.logger.LogInformation($"SeedDemoData completed. {books.Count} Demo books added to the database.");
+            Program.logger.LogInformation($"SeedDemoData completed. {_books.Count} Demo _books added to the database.");
         }
     }
 }
