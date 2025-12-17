@@ -16,7 +16,7 @@ public class DeleteBook : Operations
 
     public override void ExecuteState()
     {
-        switch (operationsStates)
+        switch (OperationsStates)
         {
             case OperationsStates.Waiting:
                 ExecuteWaitingState();
@@ -40,13 +40,13 @@ public class DeleteBook : Operations
             if (choice == 1)
             {
                 _deletionInformation = ToolBox.ReadUInt("Id : ").ToString();
-                await Program.Produce(this, "Delete book by id in queue");
-                operationsStates = OperationsStates.Queued;
+                await ProducerConsumerPatternHandler.Produce(this, "Delete book by id in queue");
+                OperationsStates = OperationsStates.Queued;
             }
             else if (choice == 2)
             {
-                await Program.Produce(this, "Delete book by title in queue");
-                operationsStates = OperationsStates.Queued;
+                await ProducerConsumerPatternHandler.Produce(this, "Delete book by title in queue");
+                OperationsStates = OperationsStates.Queued;
 
             }
             else if (choice > 3)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
     public abstract class Operations
     {
-        protected OperationsStates operationsStates;
+        protected OperationsStates OperationsStates;
         public abstract void ExecuteState();
     }
 

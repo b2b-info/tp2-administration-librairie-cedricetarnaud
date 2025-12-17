@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 public class BookInformations : Operations
 {
-    private readonly Dictionary<int,Action> Operations = new Dictionary<int, Action> { {1, ShowBookDetailsById},{ 2,ShowBookCount}, {3,ShowAllBooks },{4,BackToMainMenu } };
+    private readonly Dictionary<uint,Action> Operations = new Dictionary<uint, Action> { {1, ShowBookDetailsById},{ 2,ShowBookCount}, {3,ShowAllBooks },{4,BackToMainMenu } };
     public override void ExecuteState()
     {
-        if (operationsStates == OperationsStates.Waiting)
+        if (OperationsStates == OperationsStates.Waiting)
         {
             bool choiceInvalidValid = true;
             while (choiceInvalidValid)
@@ -21,7 +21,7 @@ public class BookInformations : Operations
                 Console.WriteLine("2. Show Book Count");
                 Console.WriteLine("3. Show All Books");
                 Console.WriteLine("4. Back to Main Menu");
-                int choice = ToolBox.ReadInt("Enter you operation: ");
+                uint choice = ToolBox.ReadUInt("Enter you operation: ");
                 if (!Operations.ContainsKey(choice))
                 {
                     Console.WriteLine("Invalid choice \n");

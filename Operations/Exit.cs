@@ -9,7 +9,7 @@ internal class Exit : Operations
 {
     public override void ExecuteState()
     {
-        if (operationsStates == OperationsStates.Waiting)
+        if (OperationsStates == OperationsStates.Waiting)
         {
             Program.IsRunning = false;
             Program.CancellationTokenSourceMain.Cancel();

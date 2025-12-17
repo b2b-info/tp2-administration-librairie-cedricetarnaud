@@ -14,12 +14,12 @@ using System.Threading.Tasks;
     private uint _updatedBookId = 0;
     private string  _updatedTitle = "default";
     private string _updatedAuthor = "default";
-    private int _updatedQuantity = 0;
+    private uint _updatedQuantity = 0;
     private double _updatedPrice = 0;
 
     public override void ExecuteState()
     {
-        switch(operationsStates)
+        switch(OperationsStates)
         {
             case OperationsStates.Waiting: 
                 ExecuteWaitingState();
@@ -80,8 +80,8 @@ using System.Threading.Tasks;
 
         AssignEntries(newTitle, newAuthor, newPrice, newQuantity);
 
-        await Program.Produce(this,"Adding book in queue");
-        operationsStates = OperationsStates.Queued;
+        await ProducerConsumerPatternHandler.Produce(this,"Adding book in queue");
+        OperationsStates = OperationsStates.Queued;
     }
 
 
@@ -97,7 +97,7 @@ using System.Threading.Tasks;
             _updatedPrice = parsedPrice;
         }
 
-        if (!string.IsNullOrWhiteSpace(newQuantity) && int.TryParse(newQuantity, out var parsedQty))
+        if (!string.IsNullOrWhiteSpace(newQuantity) && uint.TryParse(newQuantity, out var parsedQty))
         {
             _updatedQuantity = parsedQty;
         }
