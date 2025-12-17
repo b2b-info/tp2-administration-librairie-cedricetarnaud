@@ -96,35 +96,6 @@ stateDiagram-v2
         }
     }
     ```
-
- - **Fonctions dans la class Login**
-  - Justification : Toutes les fonctions gérant la connexion ou la modification des informations d'utilisateur sont des sections critiques, car elles accèdent à des ressources partagée par plusieurs parties du code. 
- - *Example :*
-    ```c#
-    public static bool IsLoggedIn()
-    {
-        Program.logger.LogDebug("Checking login attempt.");
-        lock (_lockLogin)
-        {
-            bool success = _users.Any(user =>
-                string.Equals(user.UserName, userName, StringComparison.OrdinalIgnoreCase)
-                && user.Password == passWord
-            );
-
-            if (success)
-            {
-                Program.logger.LogInformation($"Login successful for user: {userName}");
-            }
-            else
-            {
-                Program.logger.LogWarning($"Login failed for user: {userName}");
-            }
-
-            return success;
-        }
-    }
-    ```
-
 ## 4. Auteurs
 
 - **Arnaud Simard-Desmeules** – Développeur   
