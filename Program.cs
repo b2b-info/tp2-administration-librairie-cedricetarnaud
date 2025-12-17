@@ -25,11 +25,8 @@ class Program
     static async Task Main(string[] args)
     {
         Stopwatch stopwatch = Stopwatch.StartNew();
-    public static bool IsRunning = true;
-    public static CancellationTokenSource CancellationToken;
-    static async Task Main(string[] args)
-    {
-        CancellationToken = new CancellationTokenSource();
+
+        CancellationTokenSourceMain = new CancellationTokenSource();
         logger.LogInformation("Application started.");
         Database.SeedDemoData();
         logger.LogInformation("Database seed with demo data.");
@@ -41,8 +38,7 @@ class Program
         await worker;
         stopwatch.Stop();
         logger.LogInformation($"Running for {stopwatch.ElapsedMilliseconds} milliseconds");
-        var worker = Task.Run(() => Consume(CancellationToken.Token));
-        RunMenuLoop();
+
         await worker;
     }
 
