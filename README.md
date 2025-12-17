@@ -14,7 +14,7 @@
  **Solution** : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt  
 - **Data Class**  
   **Explication** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre
-  **Solution** : 
+  **Solution** : Inclure la classe comme inline class dans la classe login
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
