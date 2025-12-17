@@ -3,9 +3,9 @@
 ## 1. Changements effectués et justification
 
 ### 🤢 1.1 CodeSmells
-- **God Class**
+- **God Class**  
   **Explications** : Les classes database et program respectivement on trop de responsabilités
-- **Switch case**
+- **Switch case**  
   **Explications** : Plusieurs classes contiennent des switch case trop long, cela rend le code peut maintenable et peu lisible  
   **Solution** :  
 - **Side effect** :  
