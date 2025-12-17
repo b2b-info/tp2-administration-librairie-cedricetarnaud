@@ -8,9 +8,9 @@ public class Book
     public string Title { get; set; }
     public string Author { get; set; }
     public double Price { get; set; }
-    public int Quantity { get; set; }
+    public uint Quantity { get; set; }
 
-    public Book(uint id, string title, string author, double price, int quantity)
+    public Book(uint id, string title, string author, double price, uint quantity)
     {
         Id = id;
         Title = title;

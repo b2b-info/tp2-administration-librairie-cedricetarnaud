@@ -67,14 +67,5 @@ using System.Threading.Tasks;
             Console.WriteLine("Invalid number, try again");
         }
     }
-    public static int ReadIntPositive(string prompt)
-    {
-        while (true)
-        {
-            Console.Write(prompt);
-            if (int.TryParse(Console.ReadLine(), out var value) && value >= 0) return value;
-
-            Console.WriteLine("Invalid number, try again");
-        }
-    }
+   
 }

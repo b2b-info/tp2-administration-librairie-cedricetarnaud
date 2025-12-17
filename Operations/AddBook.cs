@@ -11,11 +11,11 @@ public class AddBook : Operations
     private uint _id = 0;
     private string _title = "Default";
     private string _author = "Default";
-    private int _quantity = 0;
+    private uint _quantity = 0;
     private double _price = 0;
     public override  void ExecuteState()
     {
-        switch (operationsStates)
+        switch (OperationsStates)
         {
             case OperationsStates.Waiting:
                 ExecuteWaitingState();
@@ -33,10 +33,10 @@ public class AddBook : Operations
         _title = ToolBox.ReadNonEmpty("Book title : ");
         _author = ToolBox.ReadNonEmpty("Book author : ");
         _price = ToolBox.ReadDoublePositive("Book price : ");
-        _quantity = ToolBox.ReadIntPositive("Book quantity : ");
+        _quantity = ToolBox.ReadUInt("Book quantity : ");
 
-        await Program.Produce(this, "Adding book in queue");
-        operationsStates = OperationsStates.Queued;
+        await ProducerConsumerPatternHandler.Produce(this, "Adding book in queue");
+        OperationsStates = OperationsStates.Queued;
     }
     private async void ExecuteQueuedState()
     {
