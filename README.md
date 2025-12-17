@@ -6,9 +6,9 @@
 - **God Class**
 - **Switch case**
 - **Side effect**
- **Explication** :
-  La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct
- **Solution** : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt
+ **Explication : ** 
+  La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct__
+ **Solution : **  _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt__
 - **God Class**
 
 
