@@ -4,7 +4,12 @@
 
 ### 1.1 CodeSmells
 - **God Class**
-- 
+- **Switch case**
+- **Side effect**
+- Explication :
+  La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct
+- Solution : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt
+- **God Class**
 
 
 ### 🧩 1.2 Implémentation de machine à état
