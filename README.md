@@ -65,24 +65,14 @@
 ## 2. Diagramme de la machine à états
 
 ```mermaid
-stateDiagram-v2
-    [*] --> En_Attente
-
-    En_Attente --> En_Execution : ordre_de_maintenance
-    En_Execution --> En_Succès : opération_ok
-    En_Execution --> En_Échec : erreur_detectée
-    En_Execution --> Timeout : dépassement_temps
-    Timeout --> En_Échec : annulation
-
-    En_Succès --> En_Attente : reset
-    En_Échec --> En_Attente : reset
-```
-
-## 3. Auteurs
     [*] --> Waiting
     Waiting --> Queued : add_to_queue
     Queued --> [*]
+
 ```
+
+## 3. Auteurs
+
 
 ## 3. Sections critiques identifiées
 - **Fonctions dans la class Database**
