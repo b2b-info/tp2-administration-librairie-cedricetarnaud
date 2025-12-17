@@ -65,6 +65,7 @@
 ## 2. Diagramme de la machine à états
 
 ```mermaid
+stateDiagram-v2
     [*] --> Waiting
     Waiting --> Queued : add_to_queue
     Queued --> [*]
