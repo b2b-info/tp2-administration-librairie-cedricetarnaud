@@ -2,7 +2,7 @@
 
 ## 1. Changements effectués et justification
 
-### 1.1 CodeSmells
+### 🤢 1.1 CodeSmells
 - **God Class**
 - **Switch case**
 - **Side effect** :  
