@@ -4,12 +4,16 @@
 
 ### 🤢 1.1 CodeSmells
 - **God Class**
+  **Explications ** : Les classes database et program respectivement on trop de responsabilités
 - **Switch case**
+  **Explications ** : Plusieurs classes contiennent des switch case trop long, cela rend le code peut maintenable et peu lisible  
+  **Solution ** :  
 - **Side effect** :  
- **Explication** : La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct  
+ **Explication** : La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct, cela rend le code difficile a comprendre
  **Solution** : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt  
-- **God Class**
-
+- **Data Class**  
+  **Explication ** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre
+  **Solution ** : 
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
