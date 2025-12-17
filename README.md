@@ -4,7 +4,7 @@
 
 ### 🤢 1.1 CodeSmells
 - **God Class**  
-  **Explications** : Les classes database et program respectivement on trop de responsabilités
+  **Explications** : Les classes database et program respectivement on trop de responsabilités  
   **Solution** : Répartir le travail sur plusieurs classes dans le projet
 - **Switch case**  
   **Explications** : Plusieurs classes contiennent des switch case trop long, cela rend le code peut maintenable et peu lisible  
