@@ -3,16 +3,16 @@
 ## 1. Changements effectués et justification
 
 ### 🤢 1.1 CodeSmells
-- **God Class**  
+- **God Class** :  
   **Explications** : Les classes database et program respectivement on trop de responsabilités  
   **Solution** : Répartir le travail sur plusieurs classes dans le projet
-- **Switch case**  
+- **Switch case** :  
   **Explications** : Plusieurs classes contiennent des switch case trop long, cela rend le code peut maintenable et peu lisible  
   **Solution** :  Implémentation d'une state machine dans le code
 - **Side effect** :  
  **Explication** : La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct, cela rend le code difficile a comprendre  
  **Solution** : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt  
-- **Data Class**  
+- **Data Class** :  
   **Explication** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre  
   **Solution** : Inclure la classe comme inline class dans la classe login
 
