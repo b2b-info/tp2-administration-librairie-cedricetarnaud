@@ -1,7 +1,8 @@
 ﻿namespace BookStore;
 
 using System;
-using System.Runtime.InteropServices.Marshalling;
+
+using System.Diagnostics;
 using System.Threading.Channels;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -18,19 +19,26 @@ class Program
     public static readonly Channel<Operations> TasksQueue = Channel.CreateUnbounded<Operations>();
     public static int IdTasks = 0;
     private static readonly object _lockIdTasks = new();
-    public static bool IsRunning = true;
-    public static CancellationTokenSource CancellationToken;
+
+    public static bool IsRunning { get; set; } = true;
+    public static CancellationTokenSource CancellationTokenSourceMain { get; set; }
     static async Task Main(string[] args)
     {
-        CancellationToken = new CancellationTokenSource();
-        logger.LogInformation("Application started.");
+        Stopwatch stopwatch = Stopwatch.StartNew();
 
+        CancellationTokenSourceMain = new CancellationTokenSource();
+        logger.LogInformation("Application started.");
         Database.SeedDemoData();
         logger.LogInformation("Database seed with demo data.");
-
         RunLoginLoop();
-        var worker = Task.Run(() => Consume(CancellationToken.Token));
+        CancellationTokenSourceMain = new CancellationTokenSource();
+        var worker = Task.Run(() => Consume(CancellationTokenSourceMain.Token));
         RunMenuLoop();
+        logger.LogInformation("Application exiting");
+        await worker;
+        stopwatch.Stop();
+        logger.LogInformation($"Running for {stopwatch.ElapsedMilliseconds} milliseconds");
+
         await worker;
     }
 
@@ -97,7 +105,7 @@ class Program
         Console.WriteLine("====================================");
     }
 
-    public static ValueTask Produce(Operations operation, string actionQueud)
+    public static ValueTask Produce(Operations operation,string actionQueud) 
     {
         logger.LogInformation(actionQueud);
         return TasksQueue.Writer.WriteAsync(operation);

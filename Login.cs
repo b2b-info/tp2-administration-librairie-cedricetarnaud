@@ -19,11 +19,10 @@ public class Login
     {
         Program.logger.LogInformation("User need to enter his Username and Password to login.");
 
-        Console.Write("Username: ");
-        userName = Console.ReadLine();
 
-        Console.Write("Password: ");
-        passWord = Console.ReadLine();
+        userName = ToolBox.ReadNonEmpty("Username : ");
+
+        passWord = ToolBox.ReadNonEmpty("Password : ");
 
         Program.logger.LogDebug($"Username: {userName}, Password: {passWord}.");
         Program.logger.LogInformation("Username and Password entered.");
@@ -49,6 +48,17 @@ public class Login
             }
 
             return success;
+        }
+    }
+    public class UserCredential
+    {
+        public string UserName { get; }
+        public string Password { get; }
+
+        public UserCredential(string userName, string password)
+        {
+            UserName = userName;
+            Password = password;
         }
     }
 }
