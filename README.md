@@ -38,14 +38,14 @@
       
     }
   ```
-  - *Justification : * Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
+  - * Justification : * Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
 
 - **Table de transition**
 - *Example : *
   ```c#
       private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
   ```
-- *Explication : Les operations possible sont toutes dans le memes dictionnary*
+- * Explication : Les operations possible sont toutes dans le memes dictionnary*
 - **State Pattern**
 - *Example : *
   ```c#
@@ -61,7 +61,7 @@
         await Task.Delay(100, cancellationToken);
     }
   ```
-- *Explication : Le code éxecute l'interface operation qui a une methode executeState qui en fonction du state va éxecuter une action différente *
+- * Explication : Le code exécute l'interface operation qui a une methode executeState qui en fonction du state va éxecuter une action différente *
 ## 2. Diagramme de la machine à états
 
 ```mermaid
