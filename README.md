@@ -22,7 +22,7 @@
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
-- * Example : * 
+- Example :  
   ```c#
       public override void ExecuteState()
     {
@@ -41,13 +41,13 @@
   - Justification : Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
 
 - **Table de transition**
-- *Example : *
+- Example : 
   ```c#
       private static readonly Dictionary<uint, Operations> PossibleOperations = new Dictionary<uint, Operations> { { 1, new AddBook() }, { 2, new DeleteBook() },{3,new BookInformations() },{ 4,new UpdateBookById()},{5,new ClearScreen() },{6,new Exit() } };
   ```
 - Explication : Les operations possible sont toutes dans le memes dictionnary*
 - **State Pattern**
-- *Example : *
+- Example : 
   ```c#
   PossibleOperations[operation]?.ExecuteState();
    public abstract class Operations
@@ -77,8 +77,8 @@ stateDiagram-v2
 
 ## 3. Sections critiques identifiées
 - **Fonctions dans la class Database**
-  - *Justification :* Toutes les fonctions qui ajoutent, modifient ou suppriment des livres constituent des sections critiques, car elles accèdent à des ressources partagées par l'essemble du programme.
-  - *Example :*
+  - Justification : Toutes les fonctions qui ajoutent, modifient ou suppriment des livres constituent des sections critiques, car elles accèdent à des ressources partagées par l'essemble du programme.
+  - Example :
     ```c#
     public static bool CheckPkExists(uint pk)
     {
@@ -102,7 +102,7 @@ stateDiagram-v2
     ```
 
  - **Fonctions dans la class Login**
-  - *Justification :* Toutes les fonctions gérant la connexion ou la modification des informations d'utilisateur sont des sections critiques, car elles accèdent à des ressources partagée par plusieurs parties du code. 
+  - Justification : Toutes les fonctions gérant la connexion ou la modification des informations d'utilisateur sont des sections critiques, car elles accèdent à des ressources partagée par plusieurs parties du code. 
  - *Example :*
     ```c#
     public static bool IsLoggedIn()
