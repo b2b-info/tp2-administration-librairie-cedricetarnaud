@@ -22,7 +22,7 @@
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
-- *Example : * 
+- * Example : * 
   ```c#
       public override void ExecuteState()
     {
