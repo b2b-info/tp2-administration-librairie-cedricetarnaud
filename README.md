@@ -12,7 +12,7 @@
  **Explication** : La methode IsLogged in de la classe login retournait un booléen loggedIn en même temps de regarder si les identifiants fournis par l'utilisateur sont correct, cela rend le code difficile a comprendre
  **Solution** : _isLoggedIn devient un champs privée de la classe Logged et la logique de régarder si les identifiants sont bon est mis dans la méthode CheckingLoginAttempt  
 - **Data Class**  
-  **Explication ** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre
+  **Explication** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre
   **Solution ** : 
 
 ### 🧩 1.2 Implémentation de machine à état
