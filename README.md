@@ -38,7 +38,7 @@
       
     }
   ```
-  - Justification : * Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
+  - Justification : Le switch permet de choisir la methode à executer en fonction du state qui est un enum allant de Waiting a queue
 
 - **Table de transition**
 - *Example : *
