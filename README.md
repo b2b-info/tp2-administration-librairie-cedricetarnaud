@@ -17,7 +17,10 @@
   - **Solution** : Inclure la classe comme inline class dans la classe login
 - **Duplicated Code** :
   - **Explication** : Certaine méthode ou nécéssité dans le code se ressemblais et avais des logiques très similaire
-  - **Solution** : Nous les avons réunis dans des méthodes communes 
+  - **Solution** : Nous les avons réunis dans des méthodes communes
+- **Poor Naming** :
+  - **Explication** : Certain nom de variable ne respectait pas les conventions de C#
+  - **Solution** : Nous les avons renommer pour qu'elle respect les normes de C#
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
