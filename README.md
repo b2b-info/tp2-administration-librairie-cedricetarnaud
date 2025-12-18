@@ -15,6 +15,9 @@
 - **Data Class** :  
   - **Explication** : La classe credentials ne fait que contenir deux champs et ne fait rien d'autre  
   - **Solution** : Inclure la classe comme inline class dans la classe login
+- **Duplicated Code** :
+  - **Explication** : Certaine méthode ou nécéssité dans le code se ressemblais et avais des logiques très similaire
+  - **Solution** : Nous les avons réunis dans des méthodes communes 
 
 ### 🧩 1.2 Implémentation de machine à état
 - **Switch enum**
